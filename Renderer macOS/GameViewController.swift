@@ -13,7 +13,6 @@ import MetalKit
 class GameViewController: NSViewController {
 
     var renderer: Renderer!
-    var mtkView: MTKView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,23 +22,36 @@ class GameViewController: NSViewController {
             return
         }
 
-        // Select the device to render with.  We choose the default device
-        guard let defaultDevice = MTLCreateSystemDefaultDevice() else {
+        let gpus = MTLCopyAllDevices()
+        var device: MTLDevice!;
+        if gpus.isEmpty {
             print("Metal is not supported on this device")
             return
         }
+        
+        let gpuNames = gpus
+            .map({ gpu in gpu.name })
+            .reduce("", { result, next in return result + "\n  " + next })
+        print("System has", gpus.count, "GPUs: ", gpuNames)
 
-        mtkView.device = defaultDevice
+        // Select a high power GPU if the system has a discrete GPU
+        device = gpus[0]
+        for gpu in gpus {
+            if !gpu.isLowPower {
+                print("Selected:", gpu.name)
+                device = gpu;
+                break
+            }
+        }
 
-        guard let newRenderer = Renderer(metalKitView: mtkView) else {
+        mtkView.device = device
+        guard let renderer = Renderer(view: mtkView) else {
             print("Renderer cannot be initialized")
             return
         }
 
-        renderer = newRenderer
-
-        renderer.mtkView(mtkView, drawableSizeWillChange: mtkView.drawableSize)
-
+        self.renderer = renderer
+        self.renderer.mtkView(mtkView, drawableSizeWillChange: mtkView.drawableSize)
         mtkView.delegate = renderer
     }
 }
