@@ -73,7 +73,12 @@ class Renderer: NSObject, MTKViewDelegate {
 
         // Binding to capture the semaphore in the callback.
         let semaphore = _drawSemaphore
-        commandBuffer.addCompletedHandler{ _ in semaphore.signal() }
+        commandBuffer.addCompletedHandler { commandBuffer in
+            if let error = commandBuffer.error {
+                print("error executing command buffer:", error)
+            }
+            semaphore.signal()
+        }
 
         // TODO: move this out to its own special scene
         let renderPassDescriptor = view.currentRenderPassDescriptor!
@@ -82,8 +87,8 @@ class Renderer: NSObject, MTKViewDelegate {
             renderEncoder.label = "Clear Color Pass"
             renderEncoder.endEncoding()
         }
+        
         commandBuffer.present(view.currentDrawable!)
-
         commandBuffer.commit()
     }
 }
