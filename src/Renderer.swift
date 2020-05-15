@@ -33,9 +33,16 @@ class Renderer: NSObject, MTKViewDelegate {
     // The frame in the triple-buffering sequence used to index shared buffer regions.
     private var _currentBufferingStep = 0
 
+    // The Scene that is being rendered.
+    private let _scene: Scene
+
+    // The currently active render pipeline.
+    private var _currentPipeline: RenderPipeline
+
     init?(view: MTKView) {
         view.colorPixelFormat = MTLPixelFormat.rgba16Float
-        view.sampleCount = 1
+        view.sampleCount = 4
+        view.drawableSize = view.frame.size
 
         self._device = view.device!
         guard let queue = self._device.makeCommandQueue() else {
@@ -49,6 +56,21 @@ class Renderer: NSObject, MTKViewDelegate {
 
         self._commandQueue = queue
         self._library = library
+
+        do {
+            self._scene = try Scene(device: self._device)
+
+            var settings = RenderPipelineSettings()
+            settings.rasterSampleCount = view.sampleCount
+            settings.colorPixelFormat = .rgba16Float
+            self._currentPipeline = try WireframePipeline(device: self._device,
+                                                          library: self._library,
+                                                          settings: settings,
+                                                          scene: self._scene)
+        } catch {
+            print("failed to construct Scene and Pipeline: \(error)")
+            return nil
+        }
 
         super.init()
     }
@@ -80,14 +102,16 @@ class Renderer: NSObject, MTKViewDelegate {
             semaphore.signal()
         }
 
-        // TODO: move this out to its own special scene
         let renderPassDescriptor = view.currentRenderPassDescriptor!
-        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(1.0, 0.0, 0.0, 0.1)
-        if let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) {
-            renderEncoder.label = "Clear Color Pass"
-            renderEncoder.endEncoding()
+
+        do {
+            try self._currentPipeline.renderFrame(commandBuffer,
+                                                  viewDescriptor: renderPassDescriptor)
+        } catch {
+            print("pipeline failed to render frame: \(error)")
+            return
         }
-        
+
         commandBuffer.present(view.currentDrawable!)
         commandBuffer.commit()
     }

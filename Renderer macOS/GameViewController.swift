@@ -30,8 +30,12 @@ class GameViewController: NSViewController {
         }
         
         let gpuNames = gpus
-            .map({ gpu in gpu.name })
-            .reduce("", { result, next in return result + "\n  " + next })
+            .map({ gpu in (gpu.name, gpu.hasUnifiedMemory) })
+            .reduce("", { (result, next) -> String in
+                let (name, hasUnifiedMemory) = next
+                let detail = hasUnifiedMemory ? "shared CPU memory" : "no shared memory"
+                return String(format: "%@\n %@; %@", result, name, detail)
+            })
         print("System has", gpus.count, "GPUs: ", gpuNames)
 
         // Select a high power GPU if the system has a discrete GPU
