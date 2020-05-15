@@ -12,9 +12,11 @@
 #include <simd/simd.h>
 
 // Including header shared between this Metal shader code and Swift/C code executing Metal API commands
-#import "ShaderTypes.h"
+#import "OldShaderTypes.h"
 
 using namespace metal;
+
+namespace old {
 
 typedef struct
 {
@@ -51,4 +53,6 @@ fragment float4 fragmentShader(ColorInOut in [[stage_in]],
     half4 colorSample   = colorMap.sample(colorSampler, in.texCoord.xy);
 
     return float4(colorSample);
+}
+
 }

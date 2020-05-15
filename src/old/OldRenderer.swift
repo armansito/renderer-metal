@@ -16,7 +16,7 @@ import simd
 let alignedUniformsSize = (MemoryLayout<Uniforms>.size + 0xFF) & -0x100
 let maxBuffersInFlight = 3
 
-enum RendererError: Error {
+enum OldRendererError: Error {
     case badVertexDescriptor
 }
 
@@ -129,8 +129,8 @@ class OldRenderer: NSObject, MTKViewDelegate {
         
         let library = device.makeDefaultLibrary()
         
-        let vertexFunction = library?.makeFunction(name: "vertexShader")
-        let fragmentFunction = library?.makeFunction(name: "fragmentShader")
+        let vertexFunction = library?.makeFunction(name: "old::vertexShader")
+        let fragmentFunction = library?.makeFunction(name: "old::fragmentShader")
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.label = "RenderPipeline"
@@ -161,7 +161,7 @@ class OldRenderer: NSObject, MTKViewDelegate {
         let mdlVertexDescriptor = MTKModelIOVertexDescriptorFromMetal(mtlVertexDescriptor)
         
         guard let attributes = mdlVertexDescriptor.attributes as? [MDLVertexAttribute] else {
-            throw RendererError.badVertexDescriptor
+            throw OldRendererError.badVertexDescriptor
         }
         attributes[VertexAttribute.position.rawValue].name = MDLVertexAttributePosition
         attributes[VertexAttribute.texcoord.rawValue].name = MDLVertexAttributeTextureCoordinate
