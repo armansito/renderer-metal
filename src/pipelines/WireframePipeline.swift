@@ -16,7 +16,7 @@ class WireframePipeline: RenderPipeline {
                   settings: RenderPipelineSettings, scene: Scene) throws {
         self._renderPipelineState = try Self.makeRenderPipelineState(
             device: device, library: library, settings: settings,
-            vertexFunction: "nopVert",
+            vertexFunction: "simpleVert",
             fragmentFunction: "solidColorFrag",
             vertexDescriptor: nil)
         self._scene = scene
@@ -38,11 +38,12 @@ class WireframePipeline: RenderPipeline {
         renderEncoder.setFrontFacing(.counterClockwise)
         renderEncoder.setRenderPipelineState(self._renderPipelineState)
 
-        // Bind all triangle vertices of the scene to buffer index 0.
-        renderEncoder.setVertexBuffer(self._scene.vertexBuffer, offset: 0, index: 0)
-
         // TODO: How to render connected lines for wireframe based on just Scene data?
-        // TODO: Allow shapes in the scene define how to draw themselves.
+        // TODO: Allow shapes in the scene to define how to draw themselves.
+        renderEncoder.setVertexBuffer(self._scene.vertexBuffer,
+                                      offset: 0, index: BufferIndex.vertexPositions.rawValue)
+        renderEncoder.setVertexBuffer(self._scene.uniformsBuffer,
+                                      offset:0, index: BufferIndex.uniforms.rawValue)
         renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3)
 
         renderEncoder.popDebugGroup()

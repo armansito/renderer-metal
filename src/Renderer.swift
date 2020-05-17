@@ -81,7 +81,12 @@ class Renderer: NSObject, MTKViewDelegate {
     
     // MTKViewDelegate override:
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        // TODO
+        do {
+            try self._scene.resizeViewport(width: Float(size.width),
+                                           height: Float(size.height))
+        } catch {
+            print("failed to resize viewport: \(error)")
+        }
     }
     
     // MTKViewDelegate override:
@@ -103,7 +108,6 @@ class Renderer: NSObject, MTKViewDelegate {
         }
 
         let renderPassDescriptor = view.currentRenderPassDescriptor!
-
         do {
             try self._currentPipeline.renderFrame(commandBuffer,
                                                   viewDescriptor: renderPassDescriptor)
