@@ -57,4 +57,28 @@ class GameViewController: NSViewController {
         self.renderer.mtkView(mtkView, drawableSizeWillChange: mtkView.drawableSize)
         mtkView.delegate = renderer
     }
+
+    override func mouseDragged(with event: NSEvent) {
+        let h = Float(event.deltaX) / 100
+        let v = Float(event.deltaY) / 100
+        if event.modifierFlags.rawValue & NSEvent.ModifierFlags.command.rawValue > 0 {
+            self.renderer.moveCamera(horizontal: h, vertical: v)
+        } else {
+            self.renderer.rotateCamera(horizontal: h, vertical: v)
+        }
+    }
+
+    override func rightMouseDragged(with event: NSEvent) {
+        let h = Float(event.deltaX) / 100
+        let v = Float(event.deltaY) / 100
+        if event.modifierFlags.rawValue & NSEvent.ModifierFlags.command.rawValue > 0 {
+            self.renderer.moveCamera(horizontal: h, vertical: v)
+        } else {
+            self.renderer.panCamera(horizontal: h, vertical: v)
+        }
+    }
+
+    override func scrollWheel(with event: NSEvent) {
+        self.renderer.zoomCamera(delta: Float(event.deltaY) / 100)
+    }
 }

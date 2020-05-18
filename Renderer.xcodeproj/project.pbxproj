@@ -141,9 +141,9 @@
 			isa = PBXGroup;
 			children = (
 				72DED962246FC13E0071657B /* Shared.h */,
-				726E747E246E9B1200206CD5 /* RasterPipelines.metal */,
 				72DED970247131A60071657B /* Algebra.h */,
 				72DED9712471356A0071657B /* Algebra.metal */,
+				726E747E246E9B1200206CD5 /* RasterPipelines.metal */,
 			);
 			path = shaders;
 			sourceTree = "<group>";

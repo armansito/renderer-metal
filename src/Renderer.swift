@@ -13,7 +13,7 @@ struct RendererConstants {
     // We use a Triple Buffering approach to synchronize access to shared buffers between
     // the CPU and the GPU. With the current setting, the CPU will be at most 2 frames ahead of the
     // GPU.
-    static let maxBuffersInFlight = 3;
+    static let maxBuffersInFlight = 1;
 }
 
 class Renderer: NSObject, MTKViewDelegate {
@@ -75,48 +75,58 @@ class Renderer: NSObject, MTKViewDelegate {
         super.init()
     }
 
-    private func advanceBufferingStep() {
-        _currentBufferingStep = (_currentBufferingStep + 1) % RendererConstants.maxBuffersInFlight
+    func zoomCamera(delta: Float) {
+        self._scene.camera.zoom(delta: delta)
+    }
+
+    func rotateCamera(horizontal: Float, vertical: Float) {
+        self._scene.camera.rotate(horizontal: horizontal, vertical: vertical)
+    }
+
+    func panCamera(horizontal: Float, vertical: Float) {
+        self._scene.camera.pan(horizontal: horizontal, vertical: vertical)
+    }
+
+    func moveCamera(horizontal: Float, vertical: Float) {
+        self._scene.camera.move(horizontal: horizontal, vertical: vertical)
     }
     
     // MTKViewDelegate override:
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        do {
-            try self._scene.resizeViewport(width: Float(size.width),
-                                           height: Float(size.height))
-        } catch {
-            print("failed to resize viewport: \(error)")
-        }
+        self._scene.resizeViewport(width: Float(size.width), height: Float(size.height))
     }
     
     // MTKViewDelegate override:
     func draw(in view: MTKView) {
         _ = _drawSemaphore.wait(timeout: DispatchTime.distantFuture)
-
-        guard let commandBuffer = _commandQueue.makeCommandBuffer() else {
-            print("faield to create command buffer for draw call")
-            return
-        }
-
-        // Binding to capture the semaphore in the callback.
-        let semaphore = _drawSemaphore
-        commandBuffer.addCompletedHandler { commandBuffer in
-            if let error = commandBuffer.error {
-                print("error executing command buffer:", error)
-            }
-            semaphore.signal()
-        }
-
-        let renderPassDescriptor = view.currentRenderPassDescriptor!
         do {
+            try self._scene.updateUniforms()
+
+            guard let commandBuffer = _commandQueue.makeCommandBuffer() else {
+                print("failed to create command buffer for draw call")
+                return
+            }
+
+            // Binding to capture the semaphore in the callback.
+            let semaphore = _drawSemaphore
+            commandBuffer.addCompletedHandler { commandBuffer in
+                if let error = commandBuffer.error {
+                    print("error executing command buffer:", error)
+                }
+                semaphore.signal()
+            }
+
+            let renderPassDescriptor = view.currentRenderPassDescriptor!
             try self._currentPipeline.renderFrame(commandBuffer,
                                                   viewDescriptor: renderPassDescriptor)
+            commandBuffer.present(view.currentDrawable!)
+            commandBuffer.commit()
         } catch {
             print("pipeline failed to render frame: \(error)")
-            return
         }
+    }
 
-        commandBuffer.present(view.currentDrawable!)
-        commandBuffer.commit()
+    private func advanceBufferingStep() {
+        _currentBufferingStep = (_currentBufferingStep + 1) % RendererConstants.maxBuffersInFlight
     }
 }

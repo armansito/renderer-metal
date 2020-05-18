@@ -8,7 +8,13 @@
 
 import simd
 
+// The minimum distance required between the eye and the center of rotation (which the camera is
+// directly facing).
+let ZOOM_MIN_THRESHOLD: Float = 0.5
+let ZOOM_MAX_THRESHOLD: Float = 500.0
+
 class Camera {
+    private var _center: vector_float3
     private var _view: CameraView
     private var _projection: CameraProjection
 
@@ -28,11 +34,12 @@ class Camera {
         _view.look = vector_float3(0.0, 0.0, -0.1)
         _view.up = vector_float3(0.0, 1.0, 0.0)
         _view.right = vector_float3(1.0, 0.0, 0.0)
+        _center = _view.eye + _view.look
 
         _projection = CameraProjection()
         _projection.fovy = 65 * .pi / 180
-        _projection.far = 20
-        _projection.near = 1
+        _projection.far = 100
+        _projection.near = 0.1
         _projection.width = 2
         _projection.height = 2
 
@@ -40,6 +47,7 @@ class Camera {
     }
 
     func lookAt(eye: vector_float3, center: vector_float3, up: vector_float3) {
+        _center = center
         _view.eye = eye
         _view.look = normalize(center - eye)
         _view.right = normalize(cross(self._view.look, up))
@@ -51,6 +59,50 @@ class Camera {
         _projection.width = width
         _projection.height = height
         updateProjectionMatrix()
+    }
+
+    func zoom(delta: Float) {
+        // Make sure that the eye can't go past the center.
+        var new = _view.eye + delta * _view.look
+        let gap = _center - new
+        let gapSize = length(gap)
+
+        // Snap the new eye position to a fixed distance from the camera center if it zoomed in or
+        // out too much.
+        if (gapSize <= ZOOM_MIN_THRESHOLD || dot(gap, _view.look) < 0) {
+            new = _center - ZOOM_MIN_THRESHOLD * _view.look
+        } else if (gapSize >= ZOOM_MAX_THRESHOLD) {
+            new = _center - ZOOM_MAX_THRESHOLD * _view.look
+        }
+        _view.eye = new
+    }
+
+    func rotate(horizontal: Float, vertical: Float) {
+        let horizontal = simd_quatf(angle: horizontal, axis: vector_float3(0, 1, 0))
+        let vertical = simd_quatf(angle: vertical, axis: _view.right)
+        let rotation = horizontal * vertical
+        let d = rotation.act(_view.eye - _center)
+        _view.eye = _center + d
+        lookAt(eye: _center + d, center: _center, up: rotation.act(_view.up))
+    }
+
+    // Moves the camera parallel to the view plane.
+    func pan(horizontal: Float, vertical: Float) {
+        let d = horizontal * _view.right + vertical * _view.up
+        _view.eye += d
+        _center += d
+    }
+
+    // Moves the camera parallel to the ground.
+    func move(horizontal: Float, vertical: Float) {
+        // Project the camera axes onto the ground plane. The projection of the up and look vectors
+        // will be our "forward" direction while the right vector determines horizontal movement.
+        let h = -_view.right * horizontal
+        let v = vertical * normalize(
+            vector_float3(_view.up.x, 0, _view.up.z) + vector_float3(_view.look.x, 0, _view.look.z))
+        let d = h + v
+        _view.eye += d
+        _center += d
     }
 
     private func updateProjectionMatrix() {

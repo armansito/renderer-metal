@@ -44,7 +44,7 @@ class WireframePipeline: RenderPipeline {
                                       offset: 0, index: BufferIndex.vertexPositions.rawValue)
         renderEncoder.setVertexBuffer(self._scene.uniformsBuffer,
                                       offset:0, index: BufferIndex.uniforms.rawValue)
-        renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3)
+        renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
 
         renderEncoder.popDebugGroup()
         renderEncoder.endEncoding()

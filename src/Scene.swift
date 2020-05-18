@@ -11,6 +11,9 @@ import Metal
 // A Scene describes the model of a 3D scene that can be supplied to a GPU pipeline for rendering.
 // A Scene consists of a collection of shapes, lights, and a single camera.
 class Scene {
+    // The camera maps the coordinate space.
+    let camera: Camera
+
     // Returns the GPU buffer that contains all the dynamic triangle vertex data in the scene.
     // Every element is a 3 dimensional vector of 32-bit floats.
     var vertexBuffer: MTLBuffer {
@@ -33,27 +36,25 @@ class Scene {
     // The scene uniforms.
     private let _uniforms: Buffer<Uniforms>
 
-    // The camera maps the coordinate space.
-    private let _camera: Camera
-
     // TODO: Scene should define a vertex descriptor eventually. Attribute and buffer indices should
     //       get defined by the Scene.
 
     init(device: MTLDevice) throws {
         self._device = device
-        self._camera = Camera()
-        self._camera.lookAt(eye: vector_float3(2, 2, 2),
+        self.camera = Camera()
+        self.camera.lookAt(eye: vector_float3(2, 2, 2),
                             center: vector_float3(0, 0, 0),
                             up: vector_float3(0, 1, 0))
 
-        guard let vertexBuffer = Buffer<vector_float3>(device, count: 3) else {
+        guard let vertexBuffer = Buffer<vector_float3>(device, count: 4) else {
             throw RendererError.runtimeError("failed to create vertex buffer ")
         }
         self._vertexPositions = vertexBuffer
         try self._vertexPositions.write(pos: 0, data: [
             vector3(0.5, -0.5, 0),
-            vector3(0.0, 0.5, 0),
-            vector3(-0.5, -0.5, 0)
+            vector3(0.5, 0.5, 0),
+            vector3(-0.5, -0.5, 0),
+            vector3(-0.5, 0.5, 0)
         ])
 
         guard let uniformsBuffer = Buffer<Uniforms>(device, count: 1) else {
@@ -63,16 +64,15 @@ class Scene {
         try updateUniforms()
     }
 
-    func resizeViewport(width: Float, height: Float) throws {
-        self._camera.perspective(fovY: self._camera.projection.fovy, width: width, height: height)
-        try self.updateUniforms()
+    func resizeViewport(width: Float, height: Float) {
+        self.camera.perspective(fovY: self.camera.projection.fovy, width: width, height: height)
     }
 
     // Refresh the contents of the uniforms buffer.
-    private func updateUniforms() throws {
+    func updateUniforms() throws {
         var uniforms = Uniforms()
-        uniforms.view = self._camera.view
-        uniforms.projection = self._camera.projection
+        uniforms.view = self.camera.view
+        uniforms.projection = self.camera.projection
         try self._uniforms.write(pos: 0, data: [uniforms])
     }
 }
