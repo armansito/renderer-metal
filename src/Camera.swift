@@ -11,7 +11,7 @@ import simd
 // The minimum distance required between the eye and the center of rotation (which the camera is
 // directly facing).
 let ZOOM_MIN_THRESHOLD: Float = 0.5
-let ZOOM_MAX_THRESHOLD: Float = 500.0
+let ZOOM_MAX_THRESHOLD: Float = 20.0
 
 class Camera {
     private var _center: vector_float3
@@ -37,7 +37,7 @@ class Camera {
         _center = _view.eye + _view.look
 
         _projection = CameraProjection()
-        _projection.fovy = 65 * .pi / 180
+        _projection.fovy = 35 * .pi / 180
         _projection.far = 100
         _projection.near = 0.1
         _projection.width = 2
@@ -78,8 +78,8 @@ class Camera {
     }
 
     func rotate(horizontal: Float, vertical: Float) {
-        let horizontal = simd_quatf(angle: horizontal, axis: vector_float3(0, 1, 0))
-        let vertical = simd_quatf(angle: vertical, axis: _view.right)
+        let horizontal = simd_quatf(angle: -horizontal, axis: vector_float3(0, 1, 0))
+        let vertical = simd_quatf(angle: -vertical, axis: _view.right)
         let rotation = horizontal * vertical
         let d = rotation.act(_view.eye - _center)
         _view.eye = _center + d
@@ -88,7 +88,7 @@ class Camera {
 
     // Moves the camera parallel to the view plane.
     func pan(horizontal: Float, vertical: Float) {
-        let d = horizontal * _view.right + vertical * _view.up
+        let d = vertical * _view.up - horizontal * _view.right
         _view.eye += d
         _center += d
     }

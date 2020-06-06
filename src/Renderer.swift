@@ -63,10 +63,10 @@ class Renderer: NSObject, MTKViewDelegate {
             var settings = RenderPipelineSettings()
             settings.rasterSampleCount = view.sampleCount
             settings.colorPixelFormat = .rgba16Float
-            self._currentPipeline = try WireframePipeline(device: self._device,
-                                                          library: self._library,
-                                                          settings: settings,
-                                                          scene: self._scene)
+            self._currentPipeline = try DebugPipeline(device: self._device,
+                                                      library: self._library,
+                                                      settings: settings,
+                                                      scene: self._scene)
         } catch {
             print("failed to construct Scene and Pipeline: \(error)")
             return nil

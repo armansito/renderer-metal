@@ -46,10 +46,7 @@ class Scene {
                             center: vector_float3(0, 0, 0),
                             up: vector_float3(0, 1, 0))
 
-        guard let vertexBuffer = Buffer<vector_float3>(device, count: 4) else {
-            throw RendererError.runtimeError("failed to create vertex buffer ")
-        }
-        self._vertexPositions = vertexBuffer
+        self._vertexPositions = try Buffer<vector_float3>(device, count: 4)
         try self._vertexPositions.write(pos: 0, data: [
             vector3(0.5, -0.5, 0),
             vector3(0.5, 0.5, 0),
@@ -57,10 +54,7 @@ class Scene {
             vector3(-0.5, 0.5, 0)
         ])
 
-        guard let uniformsBuffer = Buffer<Uniforms>(device, count: 1) else {
-            throw RendererError.runtimeError("failed to allocate uniforms buffer")
-        }
-        self._uniforms = uniformsBuffer
+        self._uniforms = try Buffer<Uniforms>(device, count: 1)
         try updateUniforms()
     }
 

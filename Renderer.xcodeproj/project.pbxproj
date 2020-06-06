@@ -17,9 +17,9 @@
 		724A69A3246957C7009F9378 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69A2246957C7009F9378 /* Buffer.swift */; };
 		724A69A4246957C7009F9378 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69A2246957C7009F9378 /* Buffer.swift */; };
 		724A69A5246957C7009F9378 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69A2246957C7009F9378 /* Buffer.swift */; };
-		724A69A9246D5092009F9378 /* WireframePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69A8246D5092009F9378 /* WireframePipeline.swift */; };
-		724A69AA246D5092009F9378 /* WireframePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69A8246D5092009F9378 /* WireframePipeline.swift */; };
-		724A69AB246D5092009F9378 /* WireframePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69A8246D5092009F9378 /* WireframePipeline.swift */; };
+		724A69A9246D5092009F9378 /* DebugPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69A8246D5092009F9378 /* DebugPipeline.swift */; };
+		724A69AA246D5092009F9378 /* DebugPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69A8246D5092009F9378 /* DebugPipeline.swift */; };
+		724A69AB246D5092009F9378 /* DebugPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69A8246D5092009F9378 /* DebugPipeline.swift */; };
 		724A69AD246E153F009F9378 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69AC246E153F009F9378 /* Error.swift */; };
 		724A69AE246E153F009F9378 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69AC246E153F009F9378 /* Error.swift */; };
 		724A69AF246E153F009F9378 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69AC246E153F009F9378 /* Error.swift */; };
@@ -47,6 +47,9 @@
 		72DED9722471356A0071657B /* Algebra.metal in Sources */ = {isa = PBXBuildFile; fileRef = 72DED9712471356A0071657B /* Algebra.metal */; };
 		72DED9732471356A0071657B /* Algebra.metal in Sources */ = {isa = PBXBuildFile; fileRef = 72DED9712471356A0071657B /* Algebra.metal */; };
 		72DED9742471356A0071657B /* Algebra.metal in Sources */ = {isa = PBXBuildFile; fileRef = 72DED9712471356A0071657B /* Algebra.metal */; };
+		72DED976247294D90071657B /* VertexFunctions.metal in Sources */ = {isa = PBXBuildFile; fileRef = 72DED975247294D90071657B /* VertexFunctions.metal */; };
+		72DED977247294D90071657B /* VertexFunctions.metal in Sources */ = {isa = PBXBuildFile; fileRef = 72DED975247294D90071657B /* VertexFunctions.metal */; };
+		72DED978247294D90071657B /* VertexFunctions.metal in Sources */ = {isa = PBXBuildFile; fileRef = 72DED975247294D90071657B /* VertexFunctions.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,7 +57,7 @@
 		72446EE0244AB88B0055CABA /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		72496C492468F72C0056D8D3 /* RenderPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPipeline.swift; sourceTree = "<group>"; };
 		724A69A2246957C7009F9378 /* Buffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
-		724A69A8246D5092009F9378 /* WireframePipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireframePipeline.swift; sourceTree = "<group>"; };
+		724A69A8246D5092009F9378 /* DebugPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPipeline.swift; sourceTree = "<group>"; };
 		724A69AC246E153F009F9378 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		726E747E246E9B1200206CD5 /* RasterPipelines.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RasterPipelines.metal; sourceTree = "<group>"; };
 		72C9A5BB24343FDB00BF30F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 		72DED963246FC6250071657B /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		72DED970247131A60071657B /* Algebra.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Algebra.h; sourceTree = "<group>"; };
 		72DED9712471356A0071657B /* Algebra.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Algebra.metal; sourceTree = "<group>"; };
+		72DED975247294D90071657B /* VertexFunctions.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = VertexFunctions.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				72496C492468F72C0056D8D3 /* RenderPipeline.swift */,
-				724A69A8246D5092009F9378 /* WireframePipeline.swift */,
+				724A69A8246D5092009F9378 /* DebugPipeline.swift */,
 			);
 			path = pipelines;
 			sourceTree = "<group>";
@@ -143,6 +147,7 @@
 				72DED962246FC13E0071657B /* Shared.h */,
 				72DED970247131A60071657B /* Algebra.h */,
 				72DED9712471356A0071657B /* Algebra.metal */,
+				72DED975247294D90071657B /* VertexFunctions.metal */,
 				726E747E246E9B1200206CD5 /* RasterPipelines.metal */,
 			);
 			path = shaders;
@@ -338,13 +343,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				72DED96B247111BC0071657B /* Renderer.swift in Sources */,
-				724A69A9246D5092009F9378 /* WireframePipeline.swift in Sources */,
+				724A69A9246D5092009F9378 /* DebugPipeline.swift in Sources */,
 				724A69AD246E153F009F9378 /* Error.swift in Sources */,
 				724A69A3246957C7009F9378 /* Buffer.swift in Sources */,
 				72209A8624514AA600293E96 /* Scene.swift in Sources */,
 				726E747F246E9B1200206CD5 /* RasterPipelines.metal in Sources */,
 				72DED9722471356A0071657B /* Algebra.metal in Sources */,
 				72C9A5C624343FDC00BF30F7 /* GameViewController.swift in Sources */,
+				72DED976247294D90071657B /* VertexFunctions.metal in Sources */,
 				72496C4A2468F72C0056D8D3 /* RenderPipeline.swift in Sources */,
 				72C9A5C424343FDC00BF30F7 /* AppDelegate.swift in Sources */,
 				72DED964246FC6250071657B /* Camera.swift in Sources */,
@@ -355,7 +361,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				724A69AA246D5092009F9378 /* WireframePipeline.swift in Sources */,
+				724A69AA246D5092009F9378 /* DebugPipeline.swift in Sources */,
 				724A69AE246E153F009F9378 /* Error.swift in Sources */,
 				724A69A4246957C7009F9378 /* Buffer.swift in Sources */,
 				72209A8724514AA600293E96 /* Scene.swift in Sources */,
@@ -364,6 +370,7 @@
 				72DED9732471356A0071657B /* Algebra.metal in Sources */,
 				72496C4B2468F72C0056D8D3 /* RenderPipeline.swift in Sources */,
 				72C9A5D524343FDC00BF30F7 /* AppDelegate.swift in Sources */,
+				72DED977247294D90071657B /* VertexFunctions.metal in Sources */,
 				72DED965246FC6250071657B /* Camera.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,12 +381,13 @@
 			files = (
 				724A69AF246E153F009F9378 /* Error.swift in Sources */,
 				726E7481246E9B1200206CD5 /* RasterPipelines.metal in Sources */,
-				724A69AB246D5092009F9378 /* WireframePipeline.swift in Sources */,
+				724A69AB246D5092009F9378 /* DebugPipeline.swift in Sources */,
 				724A69A5246957C7009F9378 /* Buffer.swift in Sources */,
 				72496C4C2468F72C0056D8D3 /* RenderPipeline.swift in Sources */,
 				72209A8824514AA600293E96 /* Scene.swift in Sources */,
 				72DED9742471356A0071657B /* Algebra.metal in Sources */,
 				72DED966246FC6250071657B /* Camera.swift in Sources */,
+				72DED978247294D90071657B /* VertexFunctions.metal in Sources */,
 				72C9A5E824343FDC00BF30F7 /* GameViewController.swift in Sources */,
 				72446EE1244AB88B0055CABA /* Renderer.swift in Sources */,
 				72C9A5E624343FDC00BF30F7 /* AppDelegate.swift in Sources */,

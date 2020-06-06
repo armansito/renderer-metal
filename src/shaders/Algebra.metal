@@ -23,4 +23,11 @@ float4x4 viewMatrix(constant CameraView& view) {
         -dot(view.right, view.eye), -dot(view.up, view.eye), dot(view.look, view.eye),  1);
 }
 
+float4x4 viewRotationMatrix(constant CameraView& view) {
+    return float4x4(view.right.x, view.up.x, -view.look.x, 0,
+                    view.right.y, view.up.y, -view.look.y, 0,
+                    view.right.z, view.up.z, -view.look.z, 0,
+                    0,            0,         0,            1);
+}
+
 } // namespace algebra

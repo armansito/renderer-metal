@@ -13,6 +13,11 @@ struct Buffer<T> {
     // The underlying GPU buffer.
     let buffer: MTLBuffer
 
+    // The size of this buffer in terms of the number of elements it was initialized with.
+    var count: Int {
+        get { _contents.count }
+    }
+
     // True if the memory storage mode is "managed". A managed memory buffer maintains separate
     // copies of its contents in GPU and CPU memory which need to be synchronized explicitly. If
     // false, this is a shared buffer and the GPU and the CPU access the same memory.
@@ -22,7 +27,7 @@ struct Buffer<T> {
     private let _contents: UnsafeMutableBufferPointer<T>
 
     // Allocates a new buffer of `count` elements in `device`.
-    init?(_ device: MTLDevice, count: UInt) {
+    init(_ device: MTLDevice, count: UInt) throws {
         self._isManaged = !device.hasUnifiedMemory
         let storageMode = self._isManaged ?
             MTLResourceOptions.storageModeManaged :
@@ -33,8 +38,7 @@ struct Buffer<T> {
         let bufferSize = MemoryLayout<T>.stride * count
 
         guard let buffer = device.makeBuffer(length: bufferSize, options: storageMode) else {
-            print("failed to allocate GPU buffer of size ", bufferSize)
-            return nil
+            throw RendererError.runtimeError("failed to allocate GPU buffer (size: \(count))")
         }
         self.buffer = buffer
 

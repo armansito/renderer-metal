@@ -31,13 +31,13 @@ class GameViewController: UIViewController {
         mtkView.device = defaultDevice
         mtkView.backgroundColor = UIColor.black
 
-        guard let newRenderer = Renderer(metalKitView: mtkView) else {
+        guard let renderer = Renderer(view: mtkView) else {
             print("Renderer cannot be initialized")
             return
         }
 
-        renderer = newRenderer
-        renderer.mtkView(mtkView, drawableSizeWillChange: mtkView.drawableSize)
+        self.renderer = renderer
+        self.renderer.mtkView(mtkView, drawableSizeWillChange: mtkView.drawableSize)
         mtkView.delegate = renderer
     }
 }
