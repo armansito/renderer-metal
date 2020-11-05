@@ -14,8 +14,8 @@ using namespace metal;
 
 // Vertex stage function that transforms every vertex by the camera view and projection matrices.
 vertex float4 vertex_default(const device float3* positions [[ buffer(BufferIndexVertexPositions) ]],
-                           constant Uniforms& uniforms    [[ buffer(BufferIndexUniforms) ]],
-                           uint v_id                      [[ vertex_id ]]) {
+                             constant Uniforms& uniforms    [[ buffer(BufferIndexUniforms) ]],
+                             uint v_id                      [[ vertex_id ]]) {
     float4 position = float4(positions[v_id], 1.0);
     float4x4 view = algebra::viewMatrix(uniforms.view);
     return uniforms.projection.matrix * view * position;

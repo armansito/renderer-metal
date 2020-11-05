@@ -102,11 +102,12 @@ class DebugPipeline: RenderPipeline {
 
         // TODO: How to render connected lines for wireframe based on just Scene data?
         // TODO: Allow shapes in the scene to define how to draw themselves.
-        encoder.setVertexBuffer(self._scene.vertexBuffer,
-                                      offset: 0, index: BufferIndex.vertexPositions.rawValue)
-        encoder.setVertexBuffer(self._scene.uniformsBuffer,
-                                      offset:0, index: BufferIndex.uniforms.rawValue)
-        encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
+        encoder.setVertexBuffer(self._scene.uniforms.buffer,
+                                offset:0, index: BufferIndex.uniforms.rawValue)
+        encoder.setVertexBuffer(self._scene.vertexPositions.buffer,
+                                offset: 0, index: BufferIndex.vertexPositions.rawValue)
+        encoder.drawPrimitives(type: .triangleStrip,
+                               vertexStart: 0, vertexCount: self._scene.vertexPositions.count)
 
         encoder.popDebugGroup()
     }
@@ -114,11 +115,14 @@ class DebugPipeline: RenderPipeline {
     private func drawCoordinateGrid(encoder: MTLRenderCommandEncoder) {
         encoder.pushDebugGroup("Coordinate Grid")
         encoder.setRenderPipelineState(self._gridPipeline)
+
+        encoder.setVertexBuffer(self._scene.uniforms.buffer,
+                                offset:0, index: BufferIndex.uniforms.rawValue)
         encoder.setVertexBuffer(self._gridVertices.buffer,
                                 offset: 0, index: BufferIndex.vertexPositions.rawValue)
-        encoder.setVertexBuffer(self._scene.uniformsBuffer,
-                                offset:0, index: BufferIndex.uniforms.rawValue)
-        encoder.drawPrimitives(type: .line, vertexStart: 0, vertexCount: self._gridVertices.count)
+        encoder.drawPrimitives(type: .line,
+                               vertexStart: 0, vertexCount: self._gridVertices.count)
+
         encoder.popDebugGroup()
     }
 }
