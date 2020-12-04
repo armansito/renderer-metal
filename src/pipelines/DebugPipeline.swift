@@ -90,7 +90,7 @@ class DebugPipeline: RenderPipeline {
             vertices.append(vector_float3(x, 0, -z))
         }
 
-        try buffer.write(pos: 0, data: vertices)
+        try buffer.write(pos: 0, data: vertices[...])
 
         return buffer
     }
@@ -98,15 +98,14 @@ class DebugPipeline: RenderPipeline {
     private func drawShapes(encoder: MTLRenderCommandEncoder) {
         encoder.pushDebugGroup("Shapes (Debug)")
         encoder.setFrontFacing(.counterClockwise)
+        encoder.setCullMode(.back)
         encoder.setRenderPipelineState(self._shapePipeline)
 
-        // TODO: How to render connected lines for wireframe based on just Scene data?
-        // TODO: Allow shapes in the scene to define how to draw themselves.
         encoder.setVertexBuffer(self._scene.uniforms.buffer,
                                 offset:0, index: BufferIndex.uniforms.rawValue)
         encoder.setVertexBuffer(self._scene.vertexPositions.buffer,
                                 offset: 0, index: BufferIndex.vertexPositions.rawValue)
-        encoder.drawPrimitives(type: .triangleStrip,
+        encoder.drawPrimitives(type: .triangle,
                                vertexStart: 0, vertexCount: self._scene.vertexPositions.count)
 
         encoder.popDebugGroup()

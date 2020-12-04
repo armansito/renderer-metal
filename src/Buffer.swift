@@ -47,13 +47,13 @@ struct Buffer<T> {
         self._contents = UnsafeMutableBufferPointer(start: contents, count: count)
     }
 
-    func write(pos: Int, data: [T]) throws {
+    func write(pos: UInt, data: ArraySlice<T>) throws {
+        let pos = Int(pos)
         let writeSize = data.count * MemoryLayout<T>.stride
         let lastIndex = pos + data.count
         if (pos < 0 || lastIndex > self._contents.count) {
             throw RendererError.runtimeError("invalid access to buffer!")
         }
-
         for (index, item) in data.enumerated() {
             self._contents[index + pos] = item
         }
