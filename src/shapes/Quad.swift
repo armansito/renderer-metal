@@ -15,10 +15,10 @@ class Quad: Shape {
     var transform: Transform
 
     // Shape override:
-    var triangleCount: UInt { get { 2 } }
+    var triangleCount: UInt { 2 }
 
     // Shape override:
-    var triangleVertexData: ArraySlice<vector_float3> { get { self._vertices[...] } }
+    var triangleVertexData: ArraySlice<vector_float3> { _vertices[...] }
 
     private let _vertices: [vector_float3]
 
@@ -27,7 +27,7 @@ class Quad: Shape {
 
         // TODO: Every instance currently stores its own set of vertex instances. A more efficient
         // scheme would only store transformations per-instance without duplicating vertex data.
-        self._vertices = [
+        _vertices = [
             // Triangle 1
             vector3(0.5, -0.5, 0),
             vector3(0.5, 0.5, 0),
@@ -36,7 +36,7 @@ class Quad: Shape {
             // Triangle 2
             vector3(-0.5, -0.5, 0),
             vector3(0.5, 0.5, 0),
-            vector3(-0.5, 0.5, 0)
-        ];
+            vector3(-0.5, 0.5, 0),
+        ]
     }
 }

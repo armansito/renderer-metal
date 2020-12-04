@@ -14,9 +14,7 @@ struct Buffer<T> {
     let buffer: MTLBuffer
 
     // The size of this buffer in terms of the number of elements it was initialized with.
-    var count: Int {
-        get { _contents.count }
-    }
+    var count: Int { _contents.count }
 
     // True if the memory storage mode is "managed". A managed memory buffer maintains separate
     // copies of its contents in GPU and CPU memory which need to be synchronized explicitly. If
@@ -28,8 +26,8 @@ struct Buffer<T> {
 
     // Allocates a new buffer of `count` elements in `device`.
     init(_ device: MTLDevice, count: UInt) throws {
-        self._isManaged = !device.hasUnifiedMemory
-        let storageMode = self._isManaged ?
+        _isManaged = !device.hasUnifiedMemory
+        let storageMode = _isManaged ?
             MTLResourceOptions.storageModeManaged :
             MTLResourceOptions.storageModeShared
 
@@ -44,23 +42,23 @@ struct Buffer<T> {
 
         // Stora a raw pointer to the underlying buffer.
         let contents = buffer.contents().bindMemory(to: T.self, capacity: count)
-        self._contents = UnsafeMutableBufferPointer(start: contents, count: count)
+        _contents = UnsafeMutableBufferPointer(start: contents, count: count)
     }
 
     func write(pos: UInt, data: ArraySlice<T>) throws {
         let pos = Int(pos)
         let writeSize = data.count * MemoryLayout<T>.stride
         let lastIndex = pos + data.count
-        if (pos < 0 || lastIndex > self._contents.count) {
+        if pos < 0 || lastIndex > _contents.count {
             throw RendererError.runtimeError("invalid access to buffer!")
         }
         for (index, item) in data.enumerated() {
-            self._contents[index + pos] = item
+            _contents[index + pos] = item
         }
 
         // Synchronize the CPU and GPU buffers if memory is not shared.
-        if self._isManaged {
-            self.buffer.didModifyRange(pos ..< pos + writeSize)
+        if _isManaged {
+            buffer.didModifyRange(pos ..< pos + writeSize)
         }
     }
 }

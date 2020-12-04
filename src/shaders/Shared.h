@@ -20,41 +20,41 @@
 #include <simd/simd.h>
 
 // The indices assigned to GPU buffers.
-typedef NS_ENUM(NSInteger, BufferIndex) {
-    BufferIndexUniforms = 0,
-    BufferIndexVertexPositions = 1,
+typedef NS_ENUM (NSInteger, BufferIndex) {
+	BufferIndexUniforms = 0,
+	BufferIndexVertexPositions = 1,
 };
 
 // Defines the components of the camera used to construct a view matrix.
 struct CameraView {
-    simd_float3 eye;
-    simd_float3 look;
-    simd_float3 up;
-    simd_float3 right;
+	simd_float3 eye;
+	simd_float3 look;
+	simd_float3 up;
+	simd_float3 right;
 };
 
 // Defines the components of the camera used to construct a 3D projection matrix.
 struct CameraProjection {
-    // The vertical field of view in radians.
-    float fovy;
+	// The vertical field of view in radians.
+	float fovy;
 
-    // The width and height of the viewport in terms of logical pixels.
-    float width, height;
+	// The width and height of the viewport in terms of logical pixels.
+	float width, height;
 
-    // The distance of the clipping planes along the look vector in relation to the eye.
-    float near, far;
+	// The distance of the clipping planes along the look vector in relation to the eye.
+	float near, far;
 
-    // The CPU calculated column-major perspective projection matrix. Vertex stage functions in
-    // rasterized pipelines use this value to avoid this matrix computation for every frame.
-    // Ray-traced pipelines use the fields above directly to construct rays since ray/scene
-    // intersections are calculated in world-space coordinates.
-    matrix_float4x4 matrix;
+	// The CPU calculated column-major perspective projection matrix. Vertex stage functions in
+	// rasterized pipelines use this value to avoid this matrix computation for every frame.
+	// Ray-traced pipelines use the fields above directly to construct rays since ray/scene
+	// intersections are calculated in world-space coordinates.
+	matrix_float4x4 matrix;
 };
 
 // Uniform data that does not change across threads.
 struct Uniforms {
-    struct CameraView view;
-    struct CameraProjection projection;
+	struct CameraView view;
+	struct CameraProjection projection;
 };
 
 #endif // SHADERS_SHARED_H_

@@ -14,10 +14,10 @@ class Cube: Shape {
     var transform: Transform
 
     // Shape override:
-    var triangleCount: UInt { get { UInt(self._vertices.count) / 3 } }
+    var triangleCount: UInt { UInt(_vertices.count) / 3 }
 
     // Shape override:
-    var triangleVertexData: ArraySlice<vector_float3> { get { self._vertices[...] } }
+    var triangleVertexData: ArraySlice<vector_float3> { _vertices[...] }
 
     private let _vertices: [vector_float3]
 
@@ -42,6 +42,6 @@ class Cube: Shape {
             vertices.append(contentsOf: quad.transformedTriangleVertexData())
         }
 
-        self._vertices = vertices
+        _vertices = vertices
     }
 }

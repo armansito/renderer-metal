@@ -18,24 +18,24 @@ class DebugPipeline: RenderPipeline {
 
     required init(device: MTLDevice, library: MTLLibrary,
                   settings: RenderPipelineSettings, scene: Scene) throws {
-        self._shapePipeline = try Self.buildShapePipeline(device, library, settings)
-        self._gridPipeline = try Self.buildGridPipeline(device, library, settings)
-        self._gridVertices = try Self.buildGridVertices(device)
-        self._scene = scene
+        _shapePipeline = try Self.buildShapePipeline(device, library, settings)
+        _gridPipeline = try Self.buildGridPipeline(device, library, settings)
+        _gridVertices = try Self.buildGridVertices(device)
+        _scene = scene
     }
 
     // RenderPipeline override:
     func renderFrame(_ commandBuffer: MTLCommandBuffer,
                      viewDescriptor: MTLRenderPassDescriptor) throws {
-        let renderPassDescriptor = self.buildDescriptor(defaultDescriptor: viewDescriptor)
+        let renderPassDescriptor = buildDescriptor(defaultDescriptor: viewDescriptor)
         guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(
             descriptor: renderPassDescriptor) else {
-                throw RendererError.runtimeError("failed to create render command encoder")
+            throw RendererError.runtimeError("failed to create render command encoder")
         }
 
         renderEncoder.label = "Debug Pipeline"
-        self.drawCoordinateGrid(encoder: renderEncoder)
-        self.drawShapes(encoder: renderEncoder)
+        drawCoordinateGrid(encoder: renderEncoder)
+        drawShapes(encoder: renderEncoder)
         renderEncoder.endEncoding()
     }
 
@@ -58,7 +58,7 @@ class DebugPipeline: RenderPipeline {
             vertexDescriptor: nil)
     }
 
-    private static func buildGridPipeline (
+    private static func buildGridPipeline(
         _ device: MTLDevice, _ library: MTLLibrary, _ settings: RenderPipelineSettings
     ) throws -> MTLRenderPipelineState {
         return try Self.makeRenderPipelineState(
@@ -77,13 +77,13 @@ class DebugPipeline: RenderPipeline {
         var vertices = [vector_float3]()
         vertices.reserveCapacity(vertexCount)
 
-        for i in 0..<lineCount {
+        for i in 0 ..< lineCount {
             let x = Float(span)
             let z = Float(i - span)
             vertices.append(vector_float3(x, 0, z))
             vertices.append(vector_float3(-x, 0, z))
         }
-        for i in 0..<lineCount {
+        for i in 0 ..< lineCount {
             let z = Float(span)
             let x = Float(i - span)
             vertices.append(vector_float3(x, 0, z))
@@ -99,28 +99,28 @@ class DebugPipeline: RenderPipeline {
         encoder.pushDebugGroup("Shapes (Debug)")
         encoder.setFrontFacing(.counterClockwise)
         encoder.setCullMode(.back)
-        encoder.setRenderPipelineState(self._shapePipeline)
+        encoder.setRenderPipelineState(_shapePipeline)
 
-        encoder.setVertexBuffer(self._scene.uniforms.buffer,
-                                offset:0, index: BufferIndex.uniforms.rawValue)
-        encoder.setVertexBuffer(self._scene.vertexPositions.buffer,
+        encoder.setVertexBuffer(_scene.uniforms.buffer,
+                                offset: 0, index: BufferIndex.uniforms.rawValue)
+        encoder.setVertexBuffer(_scene.vertexPositions.buffer,
                                 offset: 0, index: BufferIndex.vertexPositions.rawValue)
         encoder.drawPrimitives(type: .triangle,
-                               vertexStart: 0, vertexCount: self._scene.vertexPositions.count)
+                               vertexStart: 0, vertexCount: _scene.vertexPositions.count)
 
         encoder.popDebugGroup()
     }
 
     private func drawCoordinateGrid(encoder: MTLRenderCommandEncoder) {
         encoder.pushDebugGroup("Coordinate Grid")
-        encoder.setRenderPipelineState(self._gridPipeline)
+        encoder.setRenderPipelineState(_gridPipeline)
 
-        encoder.setVertexBuffer(self._scene.uniforms.buffer,
-                                offset:0, index: BufferIndex.uniforms.rawValue)
-        encoder.setVertexBuffer(self._gridVertices.buffer,
+        encoder.setVertexBuffer(_scene.uniforms.buffer,
+                                offset: 0, index: BufferIndex.uniforms.rawValue)
+        encoder.setVertexBuffer(_gridVertices.buffer,
                                 offset: 0, index: BufferIndex.vertexPositions.rawValue)
         encoder.drawPrimitives(type: .line,
-                               vertexStart: 0, vertexCount: self._gridVertices.count)
+                               vertexStart: 0, vertexCount: _gridVertices.count)
 
         encoder.popDebugGroup()
     }

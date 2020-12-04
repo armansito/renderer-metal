@@ -33,38 +33,38 @@ class Scene {
     private let _shapes: [Shape]
 
     init(device: MTLDevice) throws {
-        self._device = device
-        self.camera = Camera()
-        self.camera.lookAt(eye: vector_float3(2, 2, 2),
-                           center: vector_float3(0, 0, 0),
-                           up: vector_float3(0, 1, 0))
+        _device = device
+        camera = Camera()
+        camera.lookAt(eye: vector_float3(2, 2, 2),
+                      center: vector_float3(0, 0, 0),
+                      up: vector_float3(0, 1, 0))
 
-        self._shapes = [Cube(transform: Transform())]
+        _shapes = [Cube(transform: Transform())]
 
-        self.vertexPositions = try Self.allocateVertexBuffer(device, shapes: self._shapes[...])
-        self.uniforms = try Buffer<Uniforms>(device, count: 1)
+        vertexPositions = try Self.allocateVertexBuffer(device, shapes: _shapes[...])
+        uniforms = try Buffer<Uniforms>(device, count: 1)
 
         try updateUniforms()
         try updateVertexData()
     }
 
     func resizeViewport(width: Float, height: Float) {
-        self.camera.perspective(fovY: self.camera.projection.fovy, width: width, height: height)
+        camera.perspective(fovY: camera.projection.fovy, width: width, height: height)
     }
 
     // Refresh the contents of the uniforms buffer.
     func updateUniforms() throws {
         var uniforms = Uniforms()
-        uniforms.view = self.camera.view
-        uniforms.projection = self.camera.projection
+        uniforms.view = camera.view
+        uniforms.projection = camera.projection
         try self.uniforms.write(pos: 0, data: [uniforms])
     }
 
     func updateVertexData() throws {
         var offset: UInt = 0
-        for shape in self._shapes {
-            try self.vertexPositions.write(pos: offset,
-                                           data: shape.transformedTriangleVertexData()[...])
+        for shape in _shapes {
+            try vertexPositions.write(pos: offset,
+                                      data: shape.transformedTriangleVertexData()[...])
             offset += shape.triangleCount * 3
         }
     }

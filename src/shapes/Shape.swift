@@ -17,7 +17,7 @@ struct Transform {
 protocol Shape {
     // Return the number of triangles that make up this shape.
     var triangleCount: UInt { get }
-    
+
     // Return the triangle vertex data that make up this shape in coordinates that are typically
     // centered at origin. Vertices must be specified in counter-clockwise order.
     var triangleVertexData: ArraySlice<vector_float3> { get }
@@ -30,7 +30,7 @@ extension Shape {
     // Returns the triangle vertex data of this shape in world-space coordinates by applying the
     // linear transformation defined by `transform`.
     func transformedTriangleVertexData() -> [vector_float3] {
-        return self.triangleVertexData.map { (v: vector_float3) -> vector_float3 in
+        return triangleVertexData.map { (v: vector_float3) -> vector_float3 in
             self.transform.rotate.act(v) * self.transform.scale + self.transform.translate
         }
     }

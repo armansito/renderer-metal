@@ -18,13 +18,9 @@ class Camera {
     private var _view: CameraView
     private var _projection: CameraProjection
 
-    var view: CameraView {
-        get { _view }
-    }
+    var view: CameraView { _view }
 
-    var projection: CameraProjection {
-        get { _projection }
-    }
+    var projection: CameraProjection { _projection }
 
     init() {
         // Initialize the camera at the origin looking down the -z axis.
@@ -50,8 +46,8 @@ class Camera {
         _center = center
         _view.eye = eye
         _view.look = normalize(center - eye)
-        _view.right = normalize(cross(self._view.look, up))
-        _view.up = normalize(cross(self._view.right, self._view.look))
+        _view.right = normalize(cross(_view.look, up))
+        _view.up = normalize(cross(_view.right, _view.look))
     }
 
     func perspective(fovY: Float, width: Float, height: Float) {
@@ -69,9 +65,9 @@ class Camera {
 
         // Snap the new eye position to a fixed distance from the camera center if it zoomed in or
         // out too much.
-        if (gapSize <= ZOOM_MIN_THRESHOLD || dot(gap, _view.look) < 0) {
+        if gapSize <= ZOOM_MIN_THRESHOLD || dot(gap, _view.look) < 0 {
             new = _center - ZOOM_MIN_THRESHOLD * _view.look
-        } else if (gapSize >= ZOOM_MAX_THRESHOLD) {
+        } else if gapSize >= ZOOM_MAX_THRESHOLD {
             new = _center - ZOOM_MAX_THRESHOLD * _view.look
         }
         _view.eye = new
