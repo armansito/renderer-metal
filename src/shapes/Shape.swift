@@ -30,7 +30,7 @@ extension Shape {
     // Returns the triangle vertex data of this shape in world-space coordinates by applying the
     // linear transformation defined by `transform`.
     func transformedTriangleVertexData() -> [vector_float3] {
-        return triangleVertexData.map { (v: vector_float3) -> vector_float3 in
+        return self.triangleVertexData.map { (v: vector_float3) -> vector_float3 in
             self.transform.rotate.act(v) * self.transform.scale + self.transform.translate
         }
     }

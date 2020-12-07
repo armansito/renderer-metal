@@ -9,7 +9,6 @@
 import Cocoa
 import MetalKit
 
-// Our macOS specific view controller
 class GameViewController: NSViewController {
     var renderer: Renderer!
 
@@ -56,6 +55,15 @@ class GameViewController: NSViewController {
         self.renderer = renderer
         self.renderer.mtkView(mtkView, drawableSizeWillChange: mtkView.drawableSize)
         mtkView.delegate = renderer
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(debugViewEnabled),
+                                               name: Events.debugModeEnabled,
+                                               object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Events.debugModeEnabled, object: nil)
     }
 
     override func mouseDragged(with event: NSEvent) {
@@ -80,5 +88,11 @@ class GameViewController: NSViewController {
 
     override func scrollWheel(with event: NSEvent) {
         self.renderer.zoomCamera(delta: Float(event.deltaY) / 100)
+    }
+
+    @objc private func debugViewEnabled(_ notification: Notification) {
+        if let value = notification.object as? Bool {
+            self.renderer.toggleDebugMode(enabled: value)
+        }
     }
 }

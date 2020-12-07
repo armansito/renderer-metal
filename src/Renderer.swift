@@ -36,8 +36,10 @@ class Renderer: NSObject, MTKViewDelegate {
     // The Scene that is being rendered.
     private let _scene: Scene
 
-    // The currently active render pipeline.
-    private var _currentPipeline: RenderPipeline
+    private var _debugModeEnabled: Bool = false
+
+    private let _debugPipeline: DebugPipeline
+    private let _activePipeline: RenderPipeline
 
     init?(view: MTKView) {
         view.colorPixelFormat = MTLPixelFormat.rgba16Float
@@ -63,10 +65,15 @@ class Renderer: NSObject, MTKViewDelegate {
             var settings = RenderPipelineSettings()
             settings.rasterSampleCount = view.sampleCount
             settings.colorPixelFormat = .rgba16Float
-            _currentPipeline = try DebugPipeline(device: _device,
-                                                 library: _library,
-                                                 settings: settings,
-                                                 scene: _scene)
+
+            _debugPipeline = try DebugPipeline(device: _device,
+                                               library: _library,
+                                               settings: settings,
+                                               scene: _scene)
+            _activePipeline = try SolidColorPipeline(device: _device,
+                                                     library: _library,
+                                                     settings: settings,
+                                                     scene: _scene)
         } catch {
             print("failed to construct Scene and Pipeline: \(error)")
             return nil
@@ -89,6 +96,10 @@ class Renderer: NSObject, MTKViewDelegate {
 
     func moveCamera(horizontal: Float, vertical: Float) {
         _scene.camera.move(horizontal: horizontal, vertical: vertical)
+    }
+
+    func toggleDebugMode(enabled: Bool) {
+        _debugModeEnabled = enabled
     }
 
     // MTKViewDelegate override:
@@ -117,8 +128,10 @@ class Renderer: NSObject, MTKViewDelegate {
             }
 
             let renderPassDescriptor = view.currentRenderPassDescriptor!
-            try _currentPipeline.renderFrame(commandBuffer,
-                                             viewDescriptor: renderPassDescriptor)
+            try _activePipeline.renderFrame(commandBuffer, viewDescriptor: renderPassDescriptor)
+            if _debugModeEnabled {
+                try _debugPipeline.renderFrame(commandBuffer, viewDescriptor: renderPassDescriptor)
+            }
             commandBuffer.present(view.currentDrawable!)
             commandBuffer.commit()
         } catch {

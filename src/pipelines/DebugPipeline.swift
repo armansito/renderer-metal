@@ -42,7 +42,7 @@ class DebugPipeline: RenderPipeline {
     private func buildDescriptor(
         defaultDescriptor: MTLRenderPassDescriptor
     ) -> MTLRenderPassDescriptor {
-        defaultDescriptor.colorAttachments[0].loadAction = .clear
+        defaultDescriptor.colorAttachments[0].loadAction = .load
         defaultDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 1, green: 1,
                                                                          blue: 1, alpha: 1)
         return defaultDescriptor
@@ -54,7 +54,7 @@ class DebugPipeline: RenderPipeline {
         return try Self.makeRenderPipelineState(
             device: device, library: library, settings: settings,
             vertexFunction: "vertex_default",
-            fragmentFunction: "frag_solid_color",
+            fragmentFunction: "frag_solid_red_color",
             vertexDescriptor: nil)
     }
 
@@ -64,7 +64,7 @@ class DebugPipeline: RenderPipeline {
         return try Self.makeRenderPipelineState(
             device: device, library: library, settings: settings,
             vertexFunction: "vertex_infinite_grid",
-            fragmentFunction: "frag_solid_color",
+            fragmentFunction: "frag_solid_red_color",
             vertexDescriptor: nil)
     }
 
@@ -99,6 +99,7 @@ class DebugPipeline: RenderPipeline {
         encoder.pushDebugGroup("Shapes (Debug)")
         encoder.setFrontFacing(.counterClockwise)
         encoder.setCullMode(.back)
+        encoder.setTriangleFillMode(.lines)
         encoder.setRenderPipelineState(_shapePipeline)
 
         encoder.setVertexBuffer(_scene.uniforms.buffer,

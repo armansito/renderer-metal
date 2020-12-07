@@ -32,6 +32,10 @@
 		7264AC1B2579E2CF00895342 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC1A2579E2CF00895342 /* Cube.swift */; };
 		7264AC1C2579E2CF00895342 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC1A2579E2CF00895342 /* Cube.swift */; };
 		7264AC1D2579E2CF00895342 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC1A2579E2CF00895342 /* Cube.swift */; };
+		7264AC22257E21D400895342 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC21257E21D400895342 /* MenuViewController.swift */; };
+		7264AC3E257E514D00895342 /* SolidColorPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC3D257E514D00895342 /* SolidColorPipeline.swift */; };
+		7264AC3F257E514D00895342 /* SolidColorPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC3D257E514D00895342 /* SolidColorPipeline.swift */; };
+		7264AC40257E514D00895342 /* SolidColorPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC3D257E514D00895342 /* SolidColorPipeline.swift */; };
 		726E747F246E9B1200206CD5 /* RasterPipelines.metal in Sources */ = {isa = PBXBuildFile; fileRef = 726E747E246E9B1200206CD5 /* RasterPipelines.metal */; };
 		726E7480246E9B1200206CD5 /* RasterPipelines.metal in Sources */ = {isa = PBXBuildFile; fileRef = 726E747E246E9B1200206CD5 /* RasterPipelines.metal */; };
 		726E7481246E9B1200206CD5 /* RasterPipelines.metal in Sources */ = {isa = PBXBuildFile; fileRef = 726E747E246E9B1200206CD5 /* RasterPipelines.metal */; };
@@ -71,6 +75,8 @@
 		724D5B68248C90A000BEB4D2 /* Shape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
 		7264AC102579053400895342 /* Quad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quad.swift; sourceTree = "<group>"; };
 		7264AC1A2579E2CF00895342 /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
+		7264AC21257E21D400895342 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		7264AC3D257E514D00895342 /* SolidColorPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidColorPipeline.swift; sourceTree = "<group>"; };
 		726E747E246E9B1200206CD5 /* RasterPipelines.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RasterPipelines.metal; sourceTree = "<group>"; };
 		72C9A5BB24343FDB00BF30F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		72C9A5C024343FDC00BF30F7 /* Renderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Renderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +148,7 @@
 			children = (
 				72496C492468F72C0056D8D3 /* RenderPipeline.swift */,
 				724A69A8246D5092009F9378 /* DebugPipeline.swift */,
+				7264AC3D257E514D00895342 /* SolidColorPipeline.swift */,
 			);
 			path = pipelines;
 			sourceTree = "<group>";
@@ -219,6 +226,7 @@
 			children = (
 				72C9A5E524343FDC00BF30F7 /* AppDelegate.swift */,
 				72C9A5E724343FDC00BF30F7 /* GameViewController.swift */,
+				7264AC21257E21D400895342 /* MenuViewController.swift */,
 				72C9A5E924343FDC00BF30F7 /* Main.storyboard */,
 				72C9A5EC24343FDC00BF30F7 /* Info.plist */,
 			);
@@ -360,6 +368,7 @@
 				72DED96B247111BC0071657B /* Renderer.swift in Sources */,
 				724A69A9246D5092009F9378 /* DebugPipeline.swift in Sources */,
 				724A69AD246E153F009F9378 /* Error.swift in Sources */,
+				7264AC3E257E514D00895342 /* SolidColorPipeline.swift in Sources */,
 				724A69A3246957C7009F9378 /* Buffer.swift in Sources */,
 				72209A8624514AA600293E96 /* Scene.swift in Sources */,
 				726E747F246E9B1200206CD5 /* RasterPipelines.metal in Sources */,
@@ -391,6 +400,7 @@
 				72496C4B2468F72C0056D8D3 /* RenderPipeline.swift in Sources */,
 				72C9A5D524343FDC00BF30F7 /* AppDelegate.swift in Sources */,
 				72DED977247294D90071657B /* VertexFunctions.metal in Sources */,
+				7264AC3F257E514D00895342 /* SolidColorPipeline.swift in Sources */,
 				7264AC1C2579E2CF00895342 /* Cube.swift in Sources */,
 				72DED965246FC6250071657B /* Camera.swift in Sources */,
 			);
@@ -407,11 +417,13 @@
 				72496C4C2468F72C0056D8D3 /* RenderPipeline.swift in Sources */,
 				72209A8824514AA600293E96 /* Scene.swift in Sources */,
 				7264AC132579053400895342 /* Quad.swift in Sources */,
+				7264AC22257E21D400895342 /* MenuViewController.swift in Sources */,
 				724D5B6B248C90A000BEB4D2 /* Shape.swift in Sources */,
 				72DED9742471356A0071657B /* Algebra.metal in Sources */,
 				72DED966246FC6250071657B /* Camera.swift in Sources */,
 				72DED978247294D90071657B /* VertexFunctions.metal in Sources */,
 				7264AC1D2579E2CF00895342 /* Cube.swift in Sources */,
+				7264AC40257E514D00895342 /* SolidColorPipeline.swift in Sources */,
 				72C9A5E824343FDC00BF30F7 /* GameViewController.swift in Sources */,
 				72446EE1244AB88B0055CABA /* Renderer.swift in Sources */,
 				72C9A5E624343FDC00BF30F7 /* AppDelegate.swift in Sources */,

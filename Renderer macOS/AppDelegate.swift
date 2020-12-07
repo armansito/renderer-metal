@@ -10,11 +10,14 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-
-
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+        if let windowController = storyboard.instantiateController(withIdentifier: "Settings Menu") as? NSWindowController {
+            windowController.showWindow(self)
+        }
+        if let windowController = storyboard.instantiateController(withIdentifier: "Renderer Window") as? NSWindowController {
+            windowController.showWindow(self)
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -24,7 +27,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
     }
-
-
 }
-
