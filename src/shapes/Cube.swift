@@ -11,19 +11,23 @@ import Foundation
 // A 3D cuboid.
 class Cube: Shape {
     // Shape override:
+    let color: vector_float3
+
+    // Shape override:
     var transform: Transform
 
     // Shape override:
     var triangleCount: UInt { UInt(_vertices.count) / 3 }
 
     // Shape override:
-    var triangleVertexData: ArraySlice<vector_float3> { _vertices[...] }
+    var triangleVertexData: ArraySlice<Vertex> { _vertices[...] }
 
-    private let _vertices: [vector_float3]
+    private let _vertices: [Vertex]
 
-    init(transform: Transform) {
+    init(transform: Transform, color: vector_float3) {
         self.transform = transform
-        var vertices: [vector_float3] = []
+        self.color = color
+        var vertices: [Vertex] = []
 
         // TODO: We currently define a cube as 6 quad faces containing 2 triangles each. This leads
         // to a lot of repetition of vertex data and a more efficient scheme could use instanced
@@ -38,7 +42,7 @@ class Cube: Shape {
         ]
 
         for (t, r) in transforms {
-            let quad = Quad(transform: Transform(translate: t, scale: 1, rotate: r))
+            let quad = Quad(transform: Transform(translate: t, rotate: r), color: color)
             vertices.append(contentsOf: quad.transformedTriangleVertexData())
         }
 

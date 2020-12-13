@@ -11,12 +11,21 @@ import Metal
 
 class SolidColorPipeline: RenderPipeline {
     private let _shapePipeline: MTLRenderPipelineState
+    private let _depthState: MTLDepthStencilState
     private let _scene: Scene
 
     required init(device: MTLDevice, library: MTLLibrary,
                   settings: RenderPipelineSettings, scene: Scene) throws {
-        _shapePipeline = try Self.buildShapePipeline(device, library, settings)
         _scene = scene
+        _shapePipeline = try Self.buildShapePipeline(device, library, settings)
+
+        let depthDescriptor = MTLDepthStencilDescriptor()
+        depthDescriptor.depthCompareFunction = .lessEqual
+        depthDescriptor.isDepthWriteEnabled = true
+        guard let depthState = device.makeDepthStencilState(descriptor: depthDescriptor) else {
+            throw RendererError.runtimeError("failed to create depth stencil state")
+        }
+        _depthState = depthState
     }
 
     // RenderPipeline override:
@@ -37,8 +46,8 @@ class SolidColorPipeline: RenderPipeline {
         defaultDescriptor: MTLRenderPassDescriptor
     ) -> MTLRenderPassDescriptor {
         defaultDescriptor.colorAttachments[0].loadAction = .clear
-        defaultDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 1, green: 1,
-                                                                         blue: 1, alpha: 1)
+        defaultDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.6, green: 0.6,
+                                                                         blue: 0.6, alpha: 1)
         return defaultDescriptor
     }
 
@@ -48,7 +57,7 @@ class SolidColorPipeline: RenderPipeline {
         return try Self.makeRenderPipelineState(
             device: device, library: library, settings: settings,
             vertexFunction: "vertex_default",
-            fragmentFunction: "frag_solid_blue_color",
+            fragmentFunction: "frag_solid_color",
             vertexDescriptor: nil)
     }
 
@@ -58,6 +67,7 @@ class SolidColorPipeline: RenderPipeline {
         encoder.setCullMode(.back)
         encoder.setTriangleFillMode(.fill)
         encoder.setRenderPipelineState(_shapePipeline)
+        encoder.setDepthStencilState(_depthState)
 
         encoder.setVertexBuffer(_scene.uniforms.buffer,
                                 offset: 0, index: BufferIndex.uniforms.rawValue)

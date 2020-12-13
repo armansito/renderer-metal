@@ -16,9 +16,6 @@ namespace algebra {
 // Computes a view matrix from the provided camera data.
 float4x4 viewMatrix(constant CameraView& view);
 
-// Returns just the rotation component of the view matrix.
-float4x4 viewRotationMatrix(constant CameraView& view);
-
 } // namespace algebra
 
 #endif // SHADERS_ALGEBRA_H_

@@ -45,6 +45,7 @@ class Renderer: NSObject, MTKViewDelegate {
         view.colorPixelFormat = MTLPixelFormat.rgba16Float
         view.sampleCount = 4
         view.drawableSize = view.frame.size
+        view.depthStencilPixelFormat = MTLPixelFormat.depth32Float
 
         _device = view.device!
         guard let queue = _device.makeCommandQueue() else {
@@ -65,6 +66,7 @@ class Renderer: NSObject, MTKViewDelegate {
             var settings = RenderPipelineSettings()
             settings.rasterSampleCount = view.sampleCount
             settings.colorPixelFormat = .rgba16Float
+            settings.depthPixelFormat = view.depthStencilPixelFormat
 
             _debugPipeline = try DebugPipeline(device: _device,
                                                library: _library,

@@ -19,7 +19,7 @@ class Scene {
     // TODO: A more efficient scheme should make use of triangle strips and instanced data instead
     // of storing triangle vertices for instances in a single buffer. We represent everything in a
     // single buffer for now in preparation for MPSTriangleAccelerationStructure.
-    let vertexPositions: Buffer<vector_float3>
+    let vertexPositions: Buffer<Vertex>
 
     // The GPU buffer that contains the constant uniform data. This contains a single
     // `Uniforms` instance.
@@ -35,11 +35,45 @@ class Scene {
     init(device: MTLDevice) throws {
         _device = device
         camera = Camera()
-        camera.lookAt(eye: vector_float3(2, 2, 2),
-                      center: vector_float3(0, 0, 0),
+        camera.lookAt(eye: vector_float3(0, 2, 9),
+                      center: vector_float3(0, 2, 0),
                       up: vector_float3(0, 1, 0))
 
-        _shapes = [Cube(transform: Transform())]
+        _shapes = [
+            // Walls
+            Quad(transform: Transform(translate: vector_float3(-2, 2, 0),
+                                      scale: vector_float3(4, 4, 4),
+                                      rotate: simd_quatf(angle: .pi / 2, axis: vector3(0, 1, 0))),
+                 color: vector_float3(1, 0, 0)),
+            Quad(transform: Transform(translate: vector_float3(2, 2, 0),
+                                      scale: vector_float3(4, 4, 4),
+                                      rotate: simd_quatf(angle: -.pi / 2, axis: vector3(0, 1, 0))),
+                 color: vector_float3(0.1, 1, 0.1)),
+            Quad(transform: Transform(translate: vector_float3(0, 2, -2),
+                                      scale: vector_float3(4, 4, 4)),
+                 color: vector_float3(1, 1, 0.3)),
+            Quad(transform: Transform(translate: vector_float3(0, 2, 2),
+                                      scale: vector_float3(4, 4, 4),
+                                      rotate: simd_quatf(angle: .pi, axis: vector3(0, 1, 0))),
+                 color: vector_float3(0, 0, 1)),
+            Quad(transform: Transform(translate: vector_float3(0, 0, 0),
+                                      scale: vector_float3(4, 4, 4),
+                                      rotate: simd_quatf(angle: -.pi / 2, axis: vector3(1, 0, 0))),
+                 color: vector_float3(1, 1, 1)),
+            Quad(transform: Transform(translate: vector_float3(0, 4, 0),
+                                      scale: vector_float3(4, 4, 4),
+                                      rotate: simd_quatf(angle: .pi / 2, axis: vector3(1, 0, 0))),
+                 color: vector_float3(1, 1, 1)),
+
+            // Cuboids
+            Cube(transform: Transform(translate: vector_float3(-0.75, 0.5, 0),
+                                      rotate: simd_quatf(angle: 0.175, axis: vector3(0, 1, 0))),
+                 color: vector3(0.1, 0.1, 1)),
+            Cube(transform: Transform(translate: vector_float3(0.75, 1, -1),
+                                      scale: vector3(1, 2, 1),
+                                      rotate: simd_quatf(angle: -.pi / 4, axis: vector3(0, 1, 0))),
+                 color: vector3(0.9, 0.9, 0.9)),
+        ]
 
         vertexPositions = try Self.allocateVertexBuffer(device, shapes: _shapes[...])
         uniforms = try Buffer<Uniforms>(device, count: 1)
@@ -70,8 +104,8 @@ class Scene {
     }
 
     // Calculate the total vertex count for the scene.
-    private static func allocateVertexBuffer(_ device: MTLDevice, shapes: ArraySlice<Shape>) throws -> Buffer<vector_float3> {
+    private static func allocateVertexBuffer(_ device: MTLDevice, shapes: ArraySlice<Shape>) throws -> Buffer<Vertex> {
         let count = shapes.map({ s in s.triangleCount }).reduce(0, +) * 3
-        return try Buffer<vector_float3>(device, count: count)
+        return try Buffer<Vertex>(device, count: count)
     }
 }

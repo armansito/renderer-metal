@@ -13,7 +13,7 @@ class DebugPipeline: RenderPipeline {
     private let _scene: Scene
 
     // Render pipeline to draw an infinite horizontal grid.
-    private let _gridVertices: Buffer<vector_float3>
+    private let _gridVertices: Buffer<Vertex>
     private let _gridPipeline: MTLRenderPipelineState
 
     required init(device: MTLDevice, library: MTLLibrary,
@@ -64,16 +64,16 @@ class DebugPipeline: RenderPipeline {
         return try Self.makeRenderPipelineState(
             device: device, library: library, settings: settings,
             vertexFunction: "vertex_infinite_grid",
-            fragmentFunction: "frag_solid_red_color",
+            fragmentFunction: "frag_solid_color",
             vertexDescriptor: nil)
     }
 
-    private static func buildGridVertices(_ device: MTLDevice) throws -> Buffer<vector_float3> {
+    private static func buildGridVertices(_ device: MTLDevice) throws -> Buffer<Vertex> {
         let span = 20
         // Total number of lines in one dimension
         let lineCount = span * 2 + 1
         let vertexCount = lineCount * 4
-        let buffer = try Buffer<vector_float3>(device, count: UInt(vertexCount))
+        let buffer = try Buffer<Vertex>(device, count: UInt(vertexCount))
         var vertices = [vector_float3]()
         vertices.reserveCapacity(vertexCount)
 
@@ -90,7 +90,9 @@ class DebugPipeline: RenderPipeline {
             vertices.append(vector_float3(x, 0, -z))
         }
 
-        try buffer.write(pos: 0, data: vertices[...])
+        try buffer.write(pos: 0, data: vertices.map { (p: vector_float3) -> Vertex in
+            Vertex(pos: p, normal: vector_float3(0, 1, 0), color: vector_float3(0.8, 0.2, 0.2))
+        }[...])
 
         return buffer
     }
@@ -98,7 +100,7 @@ class DebugPipeline: RenderPipeline {
     private func drawShapes(encoder: MTLRenderCommandEncoder) {
         encoder.pushDebugGroup("Shapes (Debug)")
         encoder.setFrontFacing(.counterClockwise)
-        encoder.setCullMode(.back)
+        encoder.setCullMode(.none)
         encoder.setTriangleFillMode(.lines)
         encoder.setRenderPipelineState(_shapePipeline)
 

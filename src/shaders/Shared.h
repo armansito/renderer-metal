@@ -57,4 +57,11 @@ struct Uniforms {
 	struct CameraProjection projection;
 };
 
+// Represents the data associated with a vertex.
+struct Vertex {
+    simd_float3 pos;
+    simd_float3 normal;
+    simd_float3 color;
+};
+
 #endif // SHADERS_SHARED_H_

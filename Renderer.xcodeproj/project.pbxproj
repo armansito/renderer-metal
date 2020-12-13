@@ -77,6 +77,7 @@
 		7264AC1A2579E2CF00895342 /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		7264AC21257E21D400895342 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		7264AC3D257E514D00895342 /* SolidColorPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidColorPipeline.swift; sourceTree = "<group>"; };
+		7264AC46257F777000895342 /* VertexFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VertexFunctions.h; sourceTree = "<group>"; };
 		726E747E246E9B1200206CD5 /* RasterPipelines.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RasterPipelines.metal; sourceTree = "<group>"; };
 		72C9A5BB24343FDB00BF30F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		72C9A5C024343FDC00BF30F7 /* Renderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Renderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,6 +170,7 @@
 				72DED962246FC13E0071657B /* Shared.h */,
 				72DED970247131A60071657B /* Algebra.h */,
 				72DED9712471356A0071657B /* Algebra.metal */,
+				7264AC46257F777000895342 /* VertexFunctions.h */,
 				72DED975247294D90071657B /* VertexFunctions.metal */,
 				726E747E246E9B1200206CD5 /* RasterPipelines.metal */,
 			);

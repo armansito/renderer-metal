@@ -12,31 +12,35 @@ import Foundation
 // normal points in the +Z direction.
 class Quad: Shape {
     // Shape override:
+    let color: vector_float3
+
+    // Shape override:
     var transform: Transform
 
     // Shape override:
     var triangleCount: UInt { 2 }
 
     // Shape override:
-    var triangleVertexData: ArraySlice<vector_float3> { _vertices[...] }
+    var triangleVertexData: ArraySlice<Vertex> { _vertices[...] }
 
-    private let _vertices: [vector_float3]
+    private let _vertices: [Vertex]
 
-    init(transform: Transform) {
+    init(transform: Transform, color: vector_float3) {
         self.transform = transform
+        self.color = color
 
         // TODO: Every instance currently stores its own set of vertex instances. A more efficient
         // scheme would only store transformations per-instance without duplicating vertex data.
         _vertices = [
             // Triangle 1
-            vector3(0.5, -0.5, 0),
-            vector3(0.5, 0.5, 0),
-            vector3(-0.5, -0.5, 0),
+            Vertex(pos: vector3(0.5, -0.5, 0), normal: vector3(0, 0, 0), color: color),
+            Vertex(pos: vector3(0.5, 0.5, 0), normal: vector3(0, 0, 0), color: color),
+            Vertex(pos: vector3(-0.5, -0.5, 0), normal: vector3(0, 0, 0), color: color),
 
             // Triangle 2
-            vector3(-0.5, -0.5, 0),
-            vector3(0.5, 0.5, 0),
-            vector3(-0.5, 0.5, 0),
+            Vertex(pos: vector3(-0.5, -0.5, 0), normal: vector3(0, 0, 0), color: color),
+            Vertex(pos: vector3(0.5, 0.5, 0), normal: vector3(0, 0, 0), color: color),
+            Vertex(pos: vector3(-0.5, 0.5, 0), normal: vector3(0, 0, 0), color: color),
         ]
     }
 }
