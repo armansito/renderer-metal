@@ -9,15 +9,20 @@
 import Foundation
 import Metal
 
-class SolidColorPipeline: RenderPipeline {
-    private let _shapePipeline: MTLRenderPipelineState
-    private let _depthState: MTLDepthStencilState
+class RasterPipeline: RenderPipeline {
     private let _scene: Scene
+    private let _depthState: MTLDepthStencilState
+
+    private let _solidColorState: MTLRenderPipelineState
+    private let _phongState: MTLRenderPipelineState
+    private var _activeState: MTLRenderPipelineState
 
     required init(device: MTLDevice, library: MTLLibrary,
                   settings: RenderPipelineSettings, scene: Scene) throws {
         _scene = scene
-        _shapePipeline = try Self.buildShapePipeline(device, library, settings)
+        _solidColorState = try Self.buildSolidColorPipelineState(device, library, settings)
+        _phongState = try Self.buildPhongPipelineState(device, library, settings)
+        _activeState = _phongState
 
         let depthDescriptor = MTLDepthStencilDescriptor()
         depthDescriptor.depthCompareFunction = .lessEqual
@@ -26,6 +31,10 @@ class SolidColorPipeline: RenderPipeline {
             throw RendererError.runtimeError("failed to create depth stencil state")
         }
         _depthState = depthState
+    }
+
+    func togglePhong(_ enable: Bool) {
+        _activeState = enable ? _phongState : _solidColorState
     }
 
     // RenderPipeline override:
@@ -46,12 +55,12 @@ class SolidColorPipeline: RenderPipeline {
         defaultDescriptor: MTLRenderPassDescriptor
     ) -> MTLRenderPassDescriptor {
         defaultDescriptor.colorAttachments[0].loadAction = .clear
-        defaultDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.6, green: 0.6,
-                                                                         blue: 0.6, alpha: 1)
+        defaultDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.01, green: 0.01,
+                                                                         blue: 0.01, alpha: 1)
         return defaultDescriptor
     }
 
-    private static func buildShapePipeline(
+    private static func buildSolidColorPipelineState(
         _ device: MTLDevice, _ library: MTLLibrary, _ settings: RenderPipelineSettings
     ) throws -> MTLRenderPipelineState {
         return try Self.makeRenderPipelineState(
@@ -61,18 +70,36 @@ class SolidColorPipeline: RenderPipeline {
             vertexDescriptor: nil)
     }
 
+    private static func buildPhongPipelineState(
+        _ device: MTLDevice, _ library: MTLLibrary, _ settings: RenderPipelineSettings
+    ) throws -> MTLRenderPipelineState {
+        return try Self.makeRenderPipelineState(
+            device: device, library: library, settings: settings,
+            vertexFunction: "vertex_default",
+            fragmentFunction: "frag_phong",
+            vertexDescriptor: nil)
+    }
+
     private func drawShapes(encoder: MTLRenderCommandEncoder) {
         encoder.pushDebugGroup("Shapes (Debug)")
         encoder.setFrontFacing(.counterClockwise)
         encoder.setCullMode(.back)
         encoder.setTriangleFillMode(.fill)
-        encoder.setRenderPipelineState(_shapePipeline)
+        encoder.setRenderPipelineState(_activeState)
         encoder.setDepthStencilState(_depthState)
 
-        encoder.setVertexBuffer(_scene.uniforms.buffer,
-                                offset: 0, index: BufferIndex.uniforms.rawValue)
-        encoder.setVertexBuffer(_scene.vertexPositions.buffer,
-                                offset: 0, index: BufferIndex.vertexPositions.rawValue)
+        // uniforms
+        encoder.setVertexBuffer(_scene.uniforms.buffer, offset: 0,
+                                index: BufferIndex.sceneUniforms.rawValue)
+        encoder.setVertexBuffer(_scene.vertexPositions.buffer, offset: 0,
+                                index: BufferIndex.vertexPositions.rawValue)
+
+        encoder.setFragmentBuffer(_scene.uniforms.buffer, offset: 0,
+                                  index: BufferIndex.sceneUniforms.rawValue)
+        encoder.setFragmentBuffer(_scene.lights.buffer, offset: 0,
+                                  index: BufferIndex.sceneLights.rawValue)
+
+        // vertices
         encoder.drawPrimitives(type: .triangle,
                                vertexStart: 0, vertexCount: _scene.vertexPositions.count)
 

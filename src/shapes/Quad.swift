@@ -31,16 +31,17 @@ class Quad: Shape {
 
         // TODO: Every instance currently stores its own set of vertex instances. A more efficient
         // scheme would only store transformations per-instance without duplicating vertex data.
-        _vertices = [
+        let posNormal: [(vector_float3, vector_float3)] = [
             // Triangle 1
-            Vertex(pos: vector3(0.5, -0.5, 0), normal: vector3(0, 0, 0), color: color),
-            Vertex(pos: vector3(0.5, 0.5, 0), normal: vector3(0, 0, 0), color: color),
-            Vertex(pos: vector3(-0.5, -0.5, 0), normal: vector3(0, 0, 0), color: color),
+            (vector3(0.5, -0.5, 0), vector3(0, 0, 1)),
+            (vector3(0.5, 0.5, 0), vector3(0, 0, 1)),
+            (vector3(-0.5, -0.5, 0), vector3(0, 0, 1)),
 
             // Triangle 2
-            Vertex(pos: vector3(-0.5, -0.5, 0), normal: vector3(0, 0, 0), color: color),
-            Vertex(pos: vector3(0.5, 0.5, 0), normal: vector3(0, 0, 0), color: color),
-            Vertex(pos: vector3(-0.5, 0.5, 0), normal: vector3(0, 0, 0), color: color),
+            (vector3(-0.5, -0.5, 0), vector3(0, 0, 1)),
+            (vector3(0.5, 0.5, 0), vector3(0, 0, 1)),
+            (vector3(-0.5, 0.5, 0), vector3(0, 0, 1)),
         ]
+        _vertices = posNormal.map { (p, n) in Vertex(pos: p, normal: n, color: color) }
     }
 }

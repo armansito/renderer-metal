@@ -21,8 +21,9 @@
 
 // The indices assigned to GPU buffers.
 typedef NS_ENUM (NSInteger, BufferIndex) {
-	BufferIndexUniforms = 0,
-	BufferIndexVertexPositions = 1,
+    BufferIndexVertexPositions = 0,
+    BufferIndexSceneUniforms = 1,
+    BufferIndexSceneLights = 2,
 };
 
 // Defines the components of the camera used to construct a view matrix.
@@ -51,10 +52,29 @@ struct CameraProjection {
 	matrix_float4x4 matrix;
 };
 
-// Uniform data that does not change across threads.
-struct Uniforms {
+struct PhongMaterial {
+    float ambient;
+    float diffuse;
+    float specular;
+    float shininess;
+};
+
+struct Light {
+    simd_float3 pos;
+    simd_float3 color;
+};
+
+// Scene-related uniform data that does not change across threads.
+struct SceneUniforms {
+    // The camera transformations.
 	struct CameraView view;
 	struct CameraProjection projection;
+
+    // Lights in the scene.
+    uint lightCount;
+
+    // TODO: Make this a per-shape construct
+    struct PhongMaterial phongMaterial;
 };
 
 // Represents the data associated with a vertex.

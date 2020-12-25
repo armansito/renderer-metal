@@ -33,9 +33,12 @@
 		7264AC1C2579E2CF00895342 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC1A2579E2CF00895342 /* Cube.swift */; };
 		7264AC1D2579E2CF00895342 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC1A2579E2CF00895342 /* Cube.swift */; };
 		7264AC22257E21D400895342 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC21257E21D400895342 /* MenuViewController.swift */; };
-		7264AC3E257E514D00895342 /* SolidColorPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC3D257E514D00895342 /* SolidColorPipeline.swift */; };
-		7264AC3F257E514D00895342 /* SolidColorPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC3D257E514D00895342 /* SolidColorPipeline.swift */; };
-		7264AC40257E514D00895342 /* SolidColorPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC3D257E514D00895342 /* SolidColorPipeline.swift */; };
+		7264AC3E257E514D00895342 /* RasterPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC3D257E514D00895342 /* RasterPipeline.swift */; };
+		7264AC3F257E514D00895342 /* RasterPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC3D257E514D00895342 /* RasterPipeline.swift */; };
+		7264AC40257E514D00895342 /* RasterPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC3D257E514D00895342 /* RasterPipeline.swift */; };
+		7264AC4B2586139100895342 /* Diamond.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC4A2586139100895342 /* Diamond.swift */; };
+		7264AC4C2586139100895342 /* Diamond.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC4A2586139100895342 /* Diamond.swift */; };
+		7264AC4D2586139100895342 /* Diamond.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC4A2586139100895342 /* Diamond.swift */; };
 		726E747F246E9B1200206CD5 /* RasterPipelines.metal in Sources */ = {isa = PBXBuildFile; fileRef = 726E747E246E9B1200206CD5 /* RasterPipelines.metal */; };
 		726E7480246E9B1200206CD5 /* RasterPipelines.metal in Sources */ = {isa = PBXBuildFile; fileRef = 726E747E246E9B1200206CD5 /* RasterPipelines.metal */; };
 		726E7481246E9B1200206CD5 /* RasterPipelines.metal in Sources */ = {isa = PBXBuildFile; fileRef = 726E747E246E9B1200206CD5 /* RasterPipelines.metal */; };
@@ -76,8 +79,9 @@
 		7264AC102579053400895342 /* Quad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quad.swift; sourceTree = "<group>"; };
 		7264AC1A2579E2CF00895342 /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		7264AC21257E21D400895342 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
-		7264AC3D257E514D00895342 /* SolidColorPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidColorPipeline.swift; sourceTree = "<group>"; };
+		7264AC3D257E514D00895342 /* RasterPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RasterPipeline.swift; sourceTree = "<group>"; };
 		7264AC46257F777000895342 /* VertexFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VertexFunctions.h; sourceTree = "<group>"; };
+		7264AC4A2586139100895342 /* Diamond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diamond.swift; sourceTree = "<group>"; };
 		726E747E246E9B1200206CD5 /* RasterPipelines.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RasterPipelines.metal; sourceTree = "<group>"; };
 		72C9A5BB24343FDB00BF30F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		72C9A5C024343FDC00BF30F7 /* Renderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Renderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,7 +153,7 @@
 			children = (
 				72496C492468F72C0056D8D3 /* RenderPipeline.swift */,
 				724A69A8246D5092009F9378 /* DebugPipeline.swift */,
-				7264AC3D257E514D00895342 /* SolidColorPipeline.swift */,
+				7264AC3D257E514D00895342 /* RasterPipeline.swift */,
 			);
 			path = pipelines;
 			sourceTree = "<group>";
@@ -160,6 +164,7 @@
 				724D5B68248C90A000BEB4D2 /* Shape.swift */,
 				7264AC102579053400895342 /* Quad.swift */,
 				7264AC1A2579E2CF00895342 /* Cube.swift */,
+				7264AC4A2586139100895342 /* Diamond.swift */,
 			);
 			path = shapes;
 			sourceTree = "<group>";
@@ -370,7 +375,8 @@
 				72DED96B247111BC0071657B /* Renderer.swift in Sources */,
 				724A69A9246D5092009F9378 /* DebugPipeline.swift in Sources */,
 				724A69AD246E153F009F9378 /* Error.swift in Sources */,
-				7264AC3E257E514D00895342 /* SolidColorPipeline.swift in Sources */,
+				7264AC3E257E514D00895342 /* RasterPipeline.swift in Sources */,
+				7264AC4B2586139100895342 /* Diamond.swift in Sources */,
 				724A69A3246957C7009F9378 /* Buffer.swift in Sources */,
 				72209A8624514AA600293E96 /* Scene.swift in Sources */,
 				726E747F246E9B1200206CD5 /* RasterPipelines.metal in Sources */,
@@ -394,6 +400,7 @@
 				724A69AE246E153F009F9378 /* Error.swift in Sources */,
 				724A69A4246957C7009F9378 /* Buffer.swift in Sources */,
 				7264AC122579053400895342 /* Quad.swift in Sources */,
+				7264AC4C2586139100895342 /* Diamond.swift in Sources */,
 				72209A8724514AA600293E96 /* Scene.swift in Sources */,
 				726E7480246E9B1200206CD5 /* RasterPipelines.metal in Sources */,
 				72C9A5D724343FDC00BF30F7 /* GameViewController.swift in Sources */,
@@ -402,7 +409,7 @@
 				72496C4B2468F72C0056D8D3 /* RenderPipeline.swift in Sources */,
 				72C9A5D524343FDC00BF30F7 /* AppDelegate.swift in Sources */,
 				72DED977247294D90071657B /* VertexFunctions.metal in Sources */,
-				7264AC3F257E514D00895342 /* SolidColorPipeline.swift in Sources */,
+				7264AC3F257E514D00895342 /* RasterPipeline.swift in Sources */,
 				7264AC1C2579E2CF00895342 /* Cube.swift in Sources */,
 				72DED965246FC6250071657B /* Camera.swift in Sources */,
 			);
@@ -418,6 +425,7 @@
 				724A69A5246957C7009F9378 /* Buffer.swift in Sources */,
 				72496C4C2468F72C0056D8D3 /* RenderPipeline.swift in Sources */,
 				72209A8824514AA600293E96 /* Scene.swift in Sources */,
+				7264AC4D2586139100895342 /* Diamond.swift in Sources */,
 				7264AC132579053400895342 /* Quad.swift in Sources */,
 				7264AC22257E21D400895342 /* MenuViewController.swift in Sources */,
 				724D5B6B248C90A000BEB4D2 /* Shape.swift in Sources */,
@@ -425,7 +433,7 @@
 				72DED966246FC6250071657B /* Camera.swift in Sources */,
 				72DED978247294D90071657B /* VertexFunctions.metal in Sources */,
 				7264AC1D2579E2CF00895342 /* Cube.swift in Sources */,
-				7264AC40257E514D00895342 /* SolidColorPipeline.swift in Sources */,
+				7264AC40257E514D00895342 /* RasterPipeline.swift in Sources */,
 				72C9A5E824343FDC00BF30F7 /* GameViewController.swift in Sources */,
 				72446EE1244AB88B0055CABA /* Renderer.swift in Sources */,
 				72C9A5E624343FDC00BF30F7 /* AppDelegate.swift in Sources */,
@@ -529,6 +537,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -582,6 +591,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -595,7 +605,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "Renderer iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -615,7 +625,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "Renderer iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -683,7 +693,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = armansito.Renderer;
 				PRODUCT_NAME = Renderer;
 				SDKROOT = macosx;
@@ -704,7 +714,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = armansito.Renderer;
 				PRODUCT_NAME = Renderer;
 				SDKROOT = macosx;

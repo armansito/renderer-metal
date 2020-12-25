@@ -58,12 +58,24 @@ class GameViewController: NSViewController {
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(debugViewEnabled),
-                                               name: Events.debugModeEnabled,
+                                               name: Event.debugModeEnabled,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(rasterPhongEnabled),
+                                               name: Event.rasterPhongEnabled,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(rasterPhongMaterialChanged),
+                                               name: Event.rasterPhongMaterialChanged,
                                                object: nil)
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self, name: Events.debugModeEnabled, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Event.debugModeEnabled, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Event.rasterPhongEnabled,
+                                                  object: nil)
+        NotificationCenter.default.removeObserver(self, name: Event.rasterPhongMaterialChanged,
+                                                  object: nil)
     }
 
     override func mouseDragged(with event: NSEvent) {
@@ -93,6 +105,18 @@ class GameViewController: NSViewController {
     @objc private func debugViewEnabled(_ notification: Notification) {
         if let value = notification.object as? Bool {
             self.renderer.toggleDebugMode(enabled: value)
+        }
+    }
+
+    @objc private func rasterPhongEnabled(_ notification: NSNotification) {
+        if let value = notification.object as? Bool {
+            self.renderer.togglePhong(enable: value)
+        }
+    }
+
+    @objc private func rasterPhongMaterialChanged(_ notification: NSNotification) {
+        if let value = notification.object as? PhongMaterial {
+            self.renderer.setPhongMaterial(value)
         }
     }
 }

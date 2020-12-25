@@ -39,10 +39,11 @@ class Renderer: NSObject, MTKViewDelegate {
     private var _debugModeEnabled: Bool = false
 
     private let _debugPipeline: DebugPipeline
+    private let _rasterPipeline: RasterPipeline
     private let _activePipeline: RenderPipeline
 
     init?(view: MTKView) {
-        view.colorPixelFormat = MTLPixelFormat.rgba16Float
+        view.colorPixelFormat = .rgba16Float
         view.sampleCount = 4
         view.drawableSize = view.frame.size
         view.depthStencilPixelFormat = MTLPixelFormat.depth32Float
@@ -65,17 +66,18 @@ class Renderer: NSObject, MTKViewDelegate {
 
             var settings = RenderPipelineSettings()
             settings.rasterSampleCount = view.sampleCount
-            settings.colorPixelFormat = .rgba16Float
+            settings.colorPixelFormat = view.colorPixelFormat
             settings.depthPixelFormat = view.depthStencilPixelFormat
 
             _debugPipeline = try DebugPipeline(device: _device,
                                                library: _library,
                                                settings: settings,
                                                scene: _scene)
-            _activePipeline = try SolidColorPipeline(device: _device,
-                                                     library: _library,
-                                                     settings: settings,
-                                                     scene: _scene)
+            _rasterPipeline = try RasterPipeline(device: _device,
+                                                 library: _library,
+                                                 settings: settings,
+                                                 scene: _scene)
+            _activePipeline = _rasterPipeline
         } catch {
             print("failed to construct Scene and Pipeline: \(error)")
             return nil
@@ -102,6 +104,14 @@ class Renderer: NSObject, MTKViewDelegate {
 
     func toggleDebugMode(enabled: Bool) {
         _debugModeEnabled = enabled
+    }
+
+    func togglePhong(enable: Bool) {
+        _rasterPipeline.togglePhong(enable)
+    }
+
+    func setPhongMaterial(_ material: PhongMaterial) {
+        _scene.phongMaterial = material
     }
 
     // MTKViewDelegate override:

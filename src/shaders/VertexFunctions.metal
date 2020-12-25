@@ -14,22 +14,24 @@ using namespace metal;
 #include "VertexFunctions.h"
 
 // Vertex stage function that transforms every vertex by the camera view and projection matrices.
-vertex VertexOutput vertex_default(const device Vertex* vertices [[ buffer(BufferIndexVertexPositions) ]],
-                                   constant Uniforms& uniforms   [[ buffer(BufferIndexUniforms) ]],
-                                   uint v_id                     [[ vertex_id ]]) {
+vertex VertexOutput vertex_default(const device Vertex* vertices    [[ buffer(BufferIndexVertexPositions) ]],
+                                   constant SceneUniforms& uniforms [[ buffer(BufferIndexSceneUniforms) ]],
+                                   uint v_id                        [[ vertex_id ]]) {
     const device Vertex& v_in = vertices[v_id];
     float4x4 matrix = uniforms.projection.matrix * algebra::viewMatrix(uniforms.view);
     return VertexOutput {
-        .pos = matrix * float4(v_in.pos, 1.0),
+        .fragmentPos = matrix * float4(v_in.pos, 1.0),
+        .pos = v_in.pos,
+        .normal = v_in.normal,
         .color = v_in.color,
     };
 }
 
 // Vertex stage function that can be used to render a coordinate grid moves with the camera.
 // This works similarly to simpleVert, except for the horizontal translation.
-vertex VertexOutput vertex_infinite_grid(const device Vertex* vertices [[ buffer(BufferIndexVertexPositions) ]],
-                                         constant Uniforms& uniforms   [[ buffer(BufferIndexUniforms) ]],
-                                         uint v_id                     [[ vertex_id ]]) {
+vertex VertexOutput vertex_infinite_grid(const device Vertex* vertices    [[ buffer(BufferIndexVertexPositions) ]],
+                                         constant SceneUniforms& uniforms [[ buffer(BufferIndexSceneUniforms) ]],
+                                         uint v_id                        [[ vertex_id ]]) {
     constant CameraView& view = uniforms.view;
     float3 vertical(0, view.eye.y > 0 ? -1 : 1, 0);
     float d = abs(view.eye.y/max(dot(vertical, uniforms.view.look), 0.1));
@@ -39,7 +41,9 @@ vertex VertexOutput vertex_infinite_grid(const device Vertex* vertices [[ buffer
     float4x4 matrix = uniforms.projection.matrix * algebra::viewMatrix(view);
     const device Vertex& v_in = vertices[v_id];
     return VertexOutput {
-        .pos = matrix * float4(v_in.pos + round(ground), 1.0),
+        .fragmentPos = matrix * float4(v_in.pos + round(ground), 1.0),
+        .pos = v_in.pos,
+        .normal = v_in.normal,
         .color = v_in.color,
     };
 }

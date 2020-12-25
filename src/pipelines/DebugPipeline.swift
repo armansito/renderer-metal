@@ -105,7 +105,7 @@ class DebugPipeline: RenderPipeline {
         encoder.setRenderPipelineState(_shapePipeline)
 
         encoder.setVertexBuffer(_scene.uniforms.buffer,
-                                offset: 0, index: BufferIndex.uniforms.rawValue)
+                                offset: 0, index: BufferIndex.sceneUniforms.rawValue)
         encoder.setVertexBuffer(_scene.vertexPositions.buffer,
                                 offset: 0, index: BufferIndex.vertexPositions.rawValue)
         encoder.drawPrimitives(type: .triangle,
@@ -119,7 +119,7 @@ class DebugPipeline: RenderPipeline {
         encoder.setRenderPipelineState(_gridPipeline)
 
         encoder.setVertexBuffer(_scene.uniforms.buffer,
-                                offset: 0, index: BufferIndex.uniforms.rawValue)
+                                offset: 0, index: BufferIndex.sceneUniforms.rawValue)
         encoder.setVertexBuffer(_gridVertices.buffer,
                                 offset: 0, index: BufferIndex.vertexPositions.rawValue)
         encoder.drawPrimitives(type: .line,

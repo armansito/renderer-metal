@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -152,7 +151,7 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="GameViewController" customModule="Renderer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl" customClass="MTKView">
-                        <rect key="frame" x="0.0" y="0.0" width="1317" height="912"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1300" height="912"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </view>
                 </viewController>
@@ -167,11 +166,11 @@
                     <window key="window" title="Menu" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="QTd-ca-W0Z">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="1331" y="747" width="321" height="288"/>
+                        <rect key="contentRect" x="1600" y="747" width="600" height="288"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
-                        <value key="minSize" type="size" width="321" height="288"/>
+                        <value key="minSize" type="size" width="600" height="288"/>
                         <view key="contentView" id="Wxg-ML-Meq">
-                            <rect key="frame" x="0.0" y="0.0" width="321" height="288"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="288"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </view>
                         <connections>
@@ -191,7 +190,6 @@
             <objects>
                 <viewController id="flV-8J-tdF" userLabel="Menu View Controller" customClass="MenuViewController" customModule="Renderer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="0XF-dZ-OCp">
-                        <rect key="frame" x="0.0" y="0.0" width="321" height="288"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </view>
                 </viewController>

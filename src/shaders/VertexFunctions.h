@@ -10,7 +10,11 @@
 #define SHADERS_VERTEX_FUNCTIONS_H_
 
 struct VertexOutput {
-    float4 pos [[position]];
+    // Screen space position of the vertex
+    float4 fragmentPos [[position]];
+
+    // World-space position and normal of the vertex
+    float3 pos;
     float3 normal;
     float3 color;
 };
