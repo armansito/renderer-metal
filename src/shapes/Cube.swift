@@ -9,7 +9,7 @@
 import Foundation
 
 // A 3D cuboid.
-class Cube: Shape {
+class Cube: Geometry {
     // Shape override:
     let color: vector_float3
 

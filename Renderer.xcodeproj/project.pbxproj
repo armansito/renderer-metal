@@ -23,9 +23,9 @@
 		724A69AD246E153F009F9378 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69AC246E153F009F9378 /* Error.swift */; };
 		724A69AE246E153F009F9378 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69AC246E153F009F9378 /* Error.swift */; };
 		724A69AF246E153F009F9378 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724A69AC246E153F009F9378 /* Error.swift */; };
-		724D5B69248C90A000BEB4D2 /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724D5B68248C90A000BEB4D2 /* Shape.swift */; };
-		724D5B6A248C90A000BEB4D2 /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724D5B68248C90A000BEB4D2 /* Shape.swift */; };
-		724D5B6B248C90A000BEB4D2 /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724D5B68248C90A000BEB4D2 /* Shape.swift */; };
+		724D5B69248C90A000BEB4D2 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724D5B68248C90A000BEB4D2 /* Geometry.swift */; };
+		724D5B6A248C90A000BEB4D2 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724D5B68248C90A000BEB4D2 /* Geometry.swift */; };
+		724D5B6B248C90A000BEB4D2 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724D5B68248C90A000BEB4D2 /* Geometry.swift */; };
 		7264AC112579053400895342 /* Quad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC102579053400895342 /* Quad.swift */; };
 		7264AC122579053400895342 /* Quad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC102579053400895342 /* Quad.swift */; };
 		7264AC132579053400895342 /* Quad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264AC102579053400895342 /* Quad.swift */; };
@@ -42,6 +42,9 @@
 		726E747F246E9B1200206CD5 /* RasterPipelines.metal in Sources */ = {isa = PBXBuildFile; fileRef = 726E747E246E9B1200206CD5 /* RasterPipelines.metal */; };
 		726E7480246E9B1200206CD5 /* RasterPipelines.metal in Sources */ = {isa = PBXBuildFile; fileRef = 726E747E246E9B1200206CD5 /* RasterPipelines.metal */; };
 		726E7481246E9B1200206CD5 /* RasterPipelines.metal in Sources */ = {isa = PBXBuildFile; fileRef = 726E747E246E9B1200206CD5 /* RasterPipelines.metal */; };
+		72B6FFD92600454400AD29BD /* Sphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B6FFD82600454400AD29BD /* Sphere.swift */; };
+		72B6FFDA2600454400AD29BD /* Sphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B6FFD82600454400AD29BD /* Sphere.swift */; };
+		72B6FFDB2600454400AD29BD /* Sphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B6FFD82600454400AD29BD /* Sphere.swift */; };
 		72C9A5C424343FDC00BF30F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C9A5C324343FDC00BF30F7 /* AppDelegate.swift */; };
 		72C9A5C624343FDC00BF30F7 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C9A5C524343FDC00BF30F7 /* GameViewController.swift */; };
 		72C9A5C924343FDC00BF30F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72C9A5C724343FDC00BF30F7 /* Main.storyboard */; };
@@ -75,7 +78,7 @@
 		724A69A2246957C7009F9378 /* Buffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
 		724A69A8246D5092009F9378 /* DebugPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPipeline.swift; sourceTree = "<group>"; };
 		724A69AC246E153F009F9378 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
-		724D5B68248C90A000BEB4D2 /* Shape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
+		724D5B68248C90A000BEB4D2 /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 		7264AC102579053400895342 /* Quad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quad.swift; sourceTree = "<group>"; };
 		7264AC1A2579E2CF00895342 /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		7264AC21257E21D400895342 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +86,7 @@
 		7264AC46257F777000895342 /* VertexFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VertexFunctions.h; sourceTree = "<group>"; };
 		7264AC4A2586139100895342 /* Diamond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diamond.swift; sourceTree = "<group>"; };
 		726E747E246E9B1200206CD5 /* RasterPipelines.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RasterPipelines.metal; sourceTree = "<group>"; };
+		72B6FFD82600454400AD29BD /* Sphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sphere.swift; sourceTree = "<group>"; };
 		72C9A5BB24343FDB00BF30F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		72C9A5C024343FDC00BF30F7 /* Renderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Renderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72C9A5C324343FDC00BF30F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -161,10 +165,11 @@
 		724A69A124695792009F9378 /* shapes */ = {
 			isa = PBXGroup;
 			children = (
-				724D5B68248C90A000BEB4D2 /* Shape.swift */,
+				724D5B68248C90A000BEB4D2 /* Geometry.swift */,
 				7264AC102579053400895342 /* Quad.swift */,
 				7264AC1A2579E2CF00895342 /* Cube.swift */,
 				7264AC4A2586139100895342 /* Diamond.swift */,
+				72B6FFD82600454400AD29BD /* Sphere.swift */,
 			);
 			path = shapes;
 			sourceTree = "<group>";
@@ -374,6 +379,7 @@
 			files = (
 				72DED96B247111BC0071657B /* Renderer.swift in Sources */,
 				724A69A9246D5092009F9378 /* DebugPipeline.swift in Sources */,
+				72B6FFD92600454400AD29BD /* Sphere.swift in Sources */,
 				724A69AD246E153F009F9378 /* Error.swift in Sources */,
 				7264AC3E257E514D00895342 /* RasterPipeline.swift in Sources */,
 				7264AC4B2586139100895342 /* Diamond.swift in Sources */,
@@ -381,7 +387,7 @@
 				72209A8624514AA600293E96 /* Scene.swift in Sources */,
 				726E747F246E9B1200206CD5 /* RasterPipelines.metal in Sources */,
 				7264AC112579053400895342 /* Quad.swift in Sources */,
-				724D5B69248C90A000BEB4D2 /* Shape.swift in Sources */,
+				724D5B69248C90A000BEB4D2 /* Geometry.swift in Sources */,
 				72DED9722471356A0071657B /* Algebra.metal in Sources */,
 				72C9A5C624343FDC00BF30F7 /* GameViewController.swift in Sources */,
 				72DED976247294D90071657B /* VertexFunctions.metal in Sources */,
@@ -405,12 +411,13 @@
 				726E7480246E9B1200206CD5 /* RasterPipelines.metal in Sources */,
 				72C9A5D724343FDC00BF30F7 /* GameViewController.swift in Sources */,
 				72DED9732471356A0071657B /* Algebra.metal in Sources */,
-				724D5B6A248C90A000BEB4D2 /* Shape.swift in Sources */,
+				724D5B6A248C90A000BEB4D2 /* Geometry.swift in Sources */,
 				72496C4B2468F72C0056D8D3 /* RenderPipeline.swift in Sources */,
 				72C9A5D524343FDC00BF30F7 /* AppDelegate.swift in Sources */,
 				72DED977247294D90071657B /* VertexFunctions.metal in Sources */,
 				7264AC3F257E514D00895342 /* RasterPipeline.swift in Sources */,
 				7264AC1C2579E2CF00895342 /* Cube.swift in Sources */,
+				72B6FFDA2600454400AD29BD /* Sphere.swift in Sources */,
 				72DED965246FC6250071657B /* Camera.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,11 +431,12 @@
 				724A69AB246D5092009F9378 /* DebugPipeline.swift in Sources */,
 				724A69A5246957C7009F9378 /* Buffer.swift in Sources */,
 				72496C4C2468F72C0056D8D3 /* RenderPipeline.swift in Sources */,
+				72B6FFDB2600454400AD29BD /* Sphere.swift in Sources */,
 				72209A8824514AA600293E96 /* Scene.swift in Sources */,
 				7264AC4D2586139100895342 /* Diamond.swift in Sources */,
 				7264AC132579053400895342 /* Quad.swift in Sources */,
 				7264AC22257E21D400895342 /* MenuViewController.swift in Sources */,
-				724D5B6B248C90A000BEB4D2 /* Shape.swift in Sources */,
+				724D5B6B248C90A000BEB4D2 /* Geometry.swift in Sources */,
 				72DED9742471356A0071657B /* Algebra.metal in Sources */,
 				72DED966246FC6250071657B /* Camera.swift in Sources */,
 				72DED978247294D90071657B /* VertexFunctions.metal in Sources */,

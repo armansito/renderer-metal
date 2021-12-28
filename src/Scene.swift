@@ -36,7 +36,7 @@ class Scene {
     private let _device: MTLDevice
 
     // The objects in the scene.
-    private let _shapes: [Shape]
+    private let _shapes: [Geometry]
     private let _lights: [Light]
 
     init(device: MTLDevice) throws {
@@ -80,14 +80,14 @@ class Scene {
                                       scale: vector3(1, 2, 1),
                                       rotate: simd_quatf(angle: -.pi / 4, axis: vector3(0, 1, 0))),
                  color: vector3(0.9, 0.9, 0.9)),
-            Diamond(transform: Transform(translate: vector3(1, 0.5, 1),
+            Sphere(transform: Transform(translate: vector3(1, 0.5, 1),
                                          rotate: simd_quatf(angle: -.pi / 8, axis: vector3(0, 1, 0))),
                     color: vector3(1, 0.5, 0)),
         ]
 
         _lights = [
             Light(pos: simd_float3(0, 3.9, 0), color: simd_float3(repeating: 1)),
-            Light(pos: simd_float3(-1.9, 3.9, -1.9), color: simd_float3(0, 1, 0)),
+            Light(pos: simd_float3(-1.9, 3.9, 1.9), color: simd_float3(0, 1, 0)),
             Light(pos: simd_float3(1.9, 3.9, -1.9), color: simd_float3(1, 0, 0)),
         ]
 
@@ -130,7 +130,7 @@ class Scene {
     }
 
     // Calculate the total vertex count for the scene.
-    private static func allocateVertexBuffer(_ device: MTLDevice, shapes: ArraySlice<Shape>) throws -> Buffer<Vertex> {
+    private static func allocateVertexBuffer(_ device: MTLDevice, shapes: ArraySlice<Geometry>) throws -> Buffer<Vertex> {
         let count = shapes.map({ s in s.triangleCount }).reduce(0, +) * 3
         return try Buffer<Vertex>(device, count: count)
     }

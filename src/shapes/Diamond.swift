@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Diamond : Shape {
+class Diamond : Geometry {
     // Shape overrides:
     let color: vector_float3
     var transform: Transform

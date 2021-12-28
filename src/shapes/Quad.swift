@@ -10,7 +10,7 @@ import Foundation
 
 // A square segment of the XY plane centered at the origin with unit length sides. The surface
 // normal points in the +Z direction.
-class Quad: Shape {
+class Quad: Geometry {
     // Shape override:
     let color: vector_float3
 

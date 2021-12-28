@@ -14,9 +14,9 @@ struct Transform {
     var rotate: simd_quatf = simd_quatf()
 }
 
-protocol Shape {
+protocol Geometry {
     // The color of the shape's surface material.
-    // TODO: generalize this to a more comprehensive object material type.
+    // TODO: generalize this to a more comprehensive object material type and decouple it from geometry.
     var color: vector_float3 { get }
 
     // Return the number of triangles that make up this shape.
@@ -30,7 +30,7 @@ protocol Shape {
     var transform: Transform { get set }
 }
 
-extension Shape {
+extension Geometry {
     // Returns the triangle vertex data of this shape in world-space coordinates by applying the
     // linear transformation defined by `transform`.
     func transformedTriangleVertexData() -> [Vertex] {
