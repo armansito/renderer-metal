@@ -87,8 +87,6 @@ class Scene {
 
         _lights = [
             Light(pos: simd_float3(0, 3.9, 0), color: simd_float3(repeating: 1)),
-            Light(pos: simd_float3(-1.9, 3.9, 1.9), color: simd_float3(0, 1, 0)),
-            Light(pos: simd_float3(1.9, 3.9, -1.9), color: simd_float3(1, 0, 0)),
         ]
 
         vertexPositions = try Self.allocateVertexBuffer(device, shapes: _shapes[...])
